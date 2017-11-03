@@ -7,12 +7,14 @@ testSize  = 10000;
 testEnd   = min(trainSize+testSize+1,60000);
 
 
-% loadIntoWorkspace();
-% dataPreProcessing(cifarData, trainSize);
+loadIntoWorkspace();
+dataPreProcessing(cifarData, trainSize);
 
-%[Xwh, mu, invMat, whMat] = whiten(cifarData);
+[cifarData2, mu, invMat, whMat] = whiten(cifarData);
 [net, sucessRateTrainging] = networkTraining(50,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
 sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
+
+
 
 % for i = 1:10
 % 
@@ -127,6 +129,38 @@ Xwh = X*whMat;
 invMat = pinv(whMat);
 
 end
+
+function [augData, augLabels] = mirrorDataSet(dataSet,dataLabels)
+
+img_data = uint8(zeros(32,32,3,size(dataSet,1)));
+
+for i = 1:size(dataSet,1)
+    img_data(:,:,:,i) = rot90(reshape(dataSet(i,:),[32,32,3]),3);
+end
+
+augLabels = [dataLabels; dataLabels];
+imgDataFliped = flip(img_data,2);
+
+augData = zeros(60000,3072);
+
+for i = 1:size(dataSet,1)
+    augData(i,:) = reshape(rot90(imgDataFliped(:,:,:,i),-3),[1,3072]);
+end
+augData = [dataSet; augData];
+
+end
+
+function dispImg(Img)
+
+figure()
+image = uint8(reshape(Img,[32,32,3]));
+image = rot90(image,3);
+imshow(image);
+
+end
+
+
+
 
 
 
