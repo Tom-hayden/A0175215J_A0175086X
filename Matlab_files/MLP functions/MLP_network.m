@@ -141,7 +141,7 @@ end
 augLabels = [dataLabels; dataLabels];
 imgDataFliped = flip(img_data,2);
 
-augData = zeros(60000,3072);
+augData = zeros(size(dataSet,1),3072);
 
 for i = 1:size(dataSet,1)
     augData(i,:) = reshape(rot90(imgDataFliped(:,:,:,i),-3),[1,3072]);
