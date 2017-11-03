@@ -2,28 +2,34 @@
 % Mario Gini, Tom Hayden
 
 % define the training and test batch size.
-trainSize = 20000;
+trainSize = 30000;
 testSize  = 10000;
 testEnd   = min(trainSize+testSize+1,60000);
 
 
-loadIntoWorkspace();
-dataPreProcessing(cifarData, trainSize);
+dataAquisition();
+% dataPreProcessing(cifarData, trainSize);
+%
+[cifarDataMirrored, cifarLabelsMirrored] = dataAugmentation(cifarData(1:trainSize,:),cifarLabels(1:trainSize,:),trainSize);
 
-[cifarData2, mu, invMat, whMat] = whiten(cifarData);
-[net, sucessRateTrainging] = networkTraining(50,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
+
+%[cifarData2, mu, invMat, whMat] = whiten(cifarData);
+
+
+[net, sucessRateTraining] = networkTraining(50,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
 sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-
+[net, sucessRateTraining] = networkTraining(50,cifarDataMirrored(1:2*trainSize,:),cifarLabelsMirrored(1:2*trainSize,:));
+sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
 % for i = 1:10
-% 
+%
 % [net, sucessRateTraining] = networkTraining(10*i,dataStd(1:trainSize,:),target(1:trainSize,:));
 % sucessRateTesting(i) = networkTesting(net,dataStd(trainSize+1:testEnd,:),target(trainSize+1:testEnd,:));
-% 
+%
 % end
 
-function loadIntoWorkspace()
+function dataAquisition()
 % loads all the cifar data into the workspace for the MLP network. The last
 % 10000 rows of the array represent the test data.
 %
@@ -96,19 +102,19 @@ function [Xwh, mu, invMat, whMat] = whiten(X,epsilon)
 % EXAMPLE
 %
 % X = rand(100,20); % 100 instance with 20 features
-% 
+%
 % figure;
 % imagesc(cov(X)); colorbar; title('original covariance matrix');
-% 
+%
 % [Xwh, mu, invMat, whMat] = whiten(X,0.0001);
-% 
+%
 % figure;
 % imagesc(cov(Xwh)); colorbar; title('whitened covariance matrix');
-% 
-% Xwh2 = (X-repmat(mean(X), size(X,1),1))*whMat; 
+%
+% Xwh2 = (X-repmat(mean(X), size(X,1),1))*whMat;
 % figure;
 % plot(sum((Xwh-Xwh2).^2),'-rx'); title('reconstructed whitening error (should be 0)');
-% 
+%
 % Xrec = Xwh*invMat + repmat(mu, size(X,1),1);
 % figure;
 % plot(sum((X-Xrec).^2),'-rx'); ylim([-1,1]); title('reconstructed data error (should be zero)');
@@ -120,33 +126,58 @@ if ~exist('epsilon','var')
     epsilon = 0.0001;
 end
 
-mu = mean(X); 
+mu = mean(X);
 X = bsxfun(@minus, X, mu);
 A = X'*X;
 [V,D,notused] = svd(A);
 whMat = sqrt(size(X,1)-1)*V*sqrtm(inv(D + eye(size(D))*epsilon))*V';
-Xwh = X*whMat;  
+Xwh = X*whMat;
 invMat = pinv(whMat);
 
 end
 
-function [augData, augLabels] = mirrorDataSet(dataSet,dataLabels)
+function [augData, augLabels] = dataAugmentation(dataSet,dataLabels,trainSize)
 
-img_data = uint8(zeros(32,32,3,size(dataSet,1)));
 
-for i = 1:size(dataSet,1)
-    img_data(:,:,:,i) = rot90(reshape(dataSet(i,:),[32,32,3]),3);
+imgData = uint8(zeros(32,32,3,trainSize));
+
+for i = 1:trainSize
+    imgData(:,:,:,i) = rot90(reshape(dataSet(i,:),[32,32,3]),3);
 end
 
-augLabels = [dataLabels; dataLabels];
-imgDataFliped = flip(img_data,2);
-
-augData = zeros(size(dataSet,1),3072);
-
-for i = 1:size(dataSet,1)
-    augData(i,:) = reshape(rot90(imgDataFliped(:,:,:,i),-3),[1,3072]);
+% increase dataLabels to 8 times the size.
+augLabels = dataLabels;
+for i = 1:7
+    augLabels = [augLabels; dataLabels];
 end
-augData = [dataSet; augData];
+
+% Allocate memory and assign first two batches to original and flipped
+% around y-axis version of data.
+augData = zeros(8*trainSize,3072);
+imgDataFlipped = flip(imgData,2);
+
+rotDataFirst = zeros(2*trainSize,3072);
+for j = 1:trainSize
+    rotDataFirst(j,:) = reshape(rot90(imgData(:,:,:,j),-3),[1,3072]);
+    rotDataFirst(trainSize+j,:) = reshape(rot90(imgDataFlipped(:,:,:,j),-3),[1,3072]);
+end
+
+augData(1:2*trainSize,:) = rotDataFirst;
+
+for i = 1:3
+    rotDataSecond = zeros(2*trainSize,3072);
+    imgDataRot = rot90(imgData,i);
+    imgDataFlippedRot = rot90(imgDataFlipped,i);
+    
+    for j = 1:trainSize
+        rotDataSecond(j,:) = reshape(rot90(imgDataRot(:,:,:,j),-3),[1,3072]);
+        rotDataSecond(trainSize+j,:) = reshape(rot90(imgDataFlippedRot(:,:,:,j),-3),[1,3072]);
+    end
+    
+    entry = 2*trainSize+2*(i-1)*trainSize;
+    augData(entry+1:entry+2*trainSize,:) = rotDataSecond;
+    
+end
 
 end
 
@@ -155,64 +186,59 @@ function dispImg(Img)
 figure()
 image = uint8(reshape(Img,[32,32,3]));
 image = rot90(image,3);
-imshow(image);
+imshow(image,'Border','tight','InitialMagnification',600);
 
 end
-
-
-
-
-
 
 function [net,sucessRateTraining] = networkTraining(numberNeurons,data,target)
 % defines and trains a MLP classifier.
 
-    x = data';
-    t = target';
+x = data';
+t = target';
 
-    trainFcn = 'trainscg';
+trainFcn = 'trainscg';
 
-    net.trainFcn = 'traingdx';
+net.trainFcn = 'traingdx';
 
-    % Create a Pattern Recognition Network
-    hiddenLayerSize = [100 numberNeurons];
-    net = patternnet(hiddenLayerSize, trainFcn);
+% Create a Pattern Recognition Network
+hiddenLayerSize = [100 numberNeurons];
+net = patternnet(hiddenLayerSize, trainFcn);
 
 
-    % Setup Division of Data for Training, Validation, Testing
-    net.divideParam.trainRatio = 80/100;
-    net.divideParam.valRatio = 20/100;
-    net.divideParam.testRatio = 0/100;
+% Setup Division of Data for Training, Validation, Testing
+net.divideParam.trainRatio = 80/100;
+net.divideParam.valRatio = 20/100;
+net.divideParam.testRatio = 0/100;
 
-    % Performance function
-    net.performFcn = 'crossentropy';
+% Performance function
+net.performFcn = 'crossentropy';
 
-    % Train the Network
+% Train the Network
 
-    [net,tr] = train(net,x,t);
+[net,tr] = train(net,x,t);
 
-    % Test the Network
-    y = net(x);
-    e = gsubtract(t,y);
-    %  performance = perform(net,t,y)
-    tind = vec2ind(t);
-    yind = vec2ind(y);
-    percentErrors = sum(tind ~= yind)/numel(tind);
-    
-    sucessRateTraining = 1- percentErrors
+% Test the Network
+y = net(x);
+e = gsubtract(t,y);
+%  performance = perform(net,t,y)
+tind = vec2ind(t);
+yind = vec2ind(y);
+percentErrors = sum(tind ~= yind)/numel(tind);
+
+sucessRateTraining = 1- percentErrors
 
 end
 
 function sucessRateTesting = networkTesting(net,data,target)
-    
-    x = data';
-    t = target';
-    y = net(x);
-    e = gsubtract(t,y);
-    tind = vec2ind(t);
-    yind = vec2ind(y);
-    percentErrors = sum(tind ~= yind)/numel(tind);
-    sucessRateTesting = 1- percentErrors
+
+x = data';
+t = target';
+y = net(x);
+e = gsubtract(t,y);
+tind = vec2ind(t);
+yind = vec2ind(y);
+percentErrors = sum(tind ~= yind)/numel(tind);
+sucessRateTesting = 1- percentErrors
 
 end
 
