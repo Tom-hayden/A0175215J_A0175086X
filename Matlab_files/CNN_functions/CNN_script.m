@@ -3,7 +3,7 @@
 
 %Add cifar to path.
 
-addpath(genpath('cifar-10-batches-mat'))
+addpath(genpath('../cifar-10-batches-mat'))
 
 %first load the cifar-10 data set and split into validate and train data
 %sets.
@@ -21,6 +21,7 @@ for i = 1:Nbatches
     end
    img_labels((i-1)*10000+1:i*10000) = labels;
 end
+
 
 %Now create catagorical vector of labels.
 keySet = [0 1 2 3 4 5 6 7 8 9];

@@ -2,6 +2,12 @@
 
 loadIntoWorkspace();
 
+
+
+[cifarData, cifarLabels] =mirrorDataSet(cifarData,cifarLabels);
+
+dispImg(cifarData(60001,:));
+
 trainSize = 20000;
 testSize  = 10000;
 testEnd   = min(trainSize+testSize+1,60000);
@@ -40,7 +46,7 @@ for i = 1:5
 end
 
 % Normalization to range [0,1]
-cifarData = 1/255*cifarData;
+%cifarData = 1/255*cifarData;
 assignin('base','cifarData',cifarData);
 assignin('base','cifarLabels',cifarLabels);
 
@@ -102,6 +108,35 @@ function sucessRateTesting = networkTesting(net,data,target)
 
 end
 
+
+function [augData, augLabels] = mirrorDataSet(dataSet,dataLabels)
+
+img_data = uint8(zeros(32,32,3,size(dataSet,1)));
+
+for i = 1:size(dataSet,1)
+    img_data(:,:,:,i) = rot90(reshape(dataSet(i,:),[32,32,3]),3);
+end
+
+augLabels = [dataLabels; dataLabels];
+imgDataFliped = flip(img_data,2);
+
+augData = zeros(60000,3072);
+
+for i = 1:size(dataSet,1)
+    augData(i,:) = reshape(rot90(imgDataFliped(:,:,:,i),-3),[1,3072]);
+end
+augData = [dataSet; augData];
+
+end
+
+function dispImg(Img)
+
+figure()
+image = uint8(reshape(Img,[32,32,3]));
+image = rot90(image,3);
+imshow(image);
+
+end
 
 % View the Network
 % view(net)
