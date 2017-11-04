@@ -2,32 +2,37 @@
 % Mario Gini, Tom Hayden
 
 % define the training and test batch size.
-trainSize = 30000;
+trainSize = 20000;
 testSize  = 10000;
 testEnd   = min(trainSize+testSize+1,60000);
 
 
+
+% aquire, preprocess and augment the data.
 dataAquisition();
-% dataPreProcessing(cifarData, trainSize);
-%
-[cifarDataMirrored, cifarLabelsMirrored] = dataAugmentation(cifarData(1:trainSize,:),cifarLabels(1:trainSize,:),trainSize);
+dataPreProcessing(cifarData, trainSize);
+onlyFlip = true;
+[cifarDataMirrored, cifarLabelsMirrored] = dataAugmentation(cifarData(1:trainSize,:),cifarLabels(1:trainSize,:),trainSize,onlyFlip);
 
 
 %[cifarData2, mu, invMat, whMat] = whiten(cifarData);
 
+% train and test the MLP classifier.
+% [net, sucessRateTraining] = networkTraining(50,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
+% sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-[net, sucessRateTraining] = networkTraining(50,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
-sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
+% [net, sucessRateTraining] = networkTraining(50,cifarDataMirrored,cifarLabelsMirrored);
+% sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-[net, sucessRateTraining] = networkTraining(50,cifarDataMirrored(1:2*trainSize,:),cifarLabelsMirrored(1:2*trainSize,:));
-sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
+for i = 1:10
 
-% for i = 1:10
-%
-% [net, sucessRateTraining] = networkTraining(10*i,dataStd(1:trainSize,:),target(1:trainSize,:));
-% sucessRateTesting(i) = networkTesting(net,dataStd(trainSize+1:testEnd,:),target(trainSize+1:testEnd,:));
-%
-% end
+ [net, sucessRateTraining] = networkTraining(10*i,cifarData(1:trainSize,:),cifarLabels(1:trainSize,:));
+ sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
+ 
+ [net, sucessRateTraining] = networkTraining(10*i,cifarDataMirrored,cifarLabelsMirrored);
+ sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
+
+end
 
 function dataAquisition()
 % loads all the cifar data into the workspace for the MLP network. The last
@@ -136,8 +141,8 @@ invMat = pinv(whMat);
 
 end
 
-function [augData, augLabels] = dataAugmentation(dataSet,dataLabels,trainSize)
-
+function [augData, augLabels] = dataAugmentation(dataSet,dataLabels,trainSize,onlyFlip)
+% augments the data by flipping and rotating it.
 
 imgData = uint8(zeros(32,32,3,trainSize));
 
@@ -146,43 +151,51 @@ for i = 1:trainSize
 end
 
 % increase dataLabels to 8 times the size.
-augLabels = dataLabels;
-for i = 1:7
-    augLabels = [augLabels; dataLabels];
+if(onlyFlip)
+    augLabels = [dataLabels; dataLabels];
+else
+    augLabels = dataLabels;
+    for i = 1:7
+        augLabels = [augLabels; dataLabels];
+    end
 end
 
 % Allocate memory and assign first two batches to original and flipped
 % around y-axis version of data.
-augData = zeros(8*trainSize,3072);
-imgDataFlipped = flip(imgData,2);
-
-rotDataFirst = zeros(2*trainSize,3072);
-for j = 1:trainSize
-    rotDataFirst(j,:) = reshape(rot90(imgData(:,:,:,j),-3),[1,3072]);
-    rotDataFirst(trainSize+j,:) = reshape(rot90(imgDataFlipped(:,:,:,j),-3),[1,3072]);
-end
-
-augData(1:2*trainSize,:) = rotDataFirst;
-
-for i = 1:3
-    rotDataSecond = zeros(2*trainSize,3072);
-    imgDataRot = rot90(imgData,i);
-    imgDataFlippedRot = rot90(imgDataFlipped,i);
-    
+if(onlyFlip)
+    augData = zeros(2*trainSize,3072);
+    imgDataFlipped = flip(imgData,2);
+    rotDataFirst = zeros(2*trainSize,3072);
+    for j = 1:trainSize
+        rotDataFirst(j,:) = reshape(rot90(imgData(:,:,:,j),-3),[1,3072]);
+        rotDataFirst(trainSize+j,:) = reshape(rot90(imgDataFlipped(:,:,:,j),-3),[1,3072]);
+    end
+    augData(1:2*trainSize,:) = rotDataFirst;
+else
+    augData = zeros(8*trainSize,3072);
+    imgDataFlipped = flip(imgData,2);
+    rotDataFirst = zeros(2*trainSize,3072);
+    for j = 1:trainSize
+        rotDataFirst(j,:) = reshape(rot90(imgData(:,:,:,j),-3),[1,3072]);
+        rotDataFirst(trainSize+j,:) = reshape(rot90(imgDataFlipped(:,:,:,j),-3),[1,3072]);
+    end
+    augData(1:2*trainSize,:) = rotDataFirst;
+    for i = 1:3
+        rotDataSecond = zeros(2*trainSize,3072);
+        imgDataRot = rot90(imgData,i);
+        imgDataFlippedRot = rot90(imgDataFlipped,i);
     for j = 1:trainSize
         rotDataSecond(j,:) = reshape(rot90(imgDataRot(:,:,:,j),-3),[1,3072]);
         rotDataSecond(trainSize+j,:) = reshape(rot90(imgDataFlippedRot(:,:,:,j),-3),[1,3072]);
     end
-    
     entry = 2*trainSize+2*(i-1)*trainSize;
     augData(entry+1:entry+2*trainSize,:) = rotDataSecond;
-    
 end
-
+end
 end
 
 function dispImg(Img)
-
+% simple function to show an image.
 figure()
 image = uint8(reshape(Img,[32,32,3]));
 image = rot90(image,3);
@@ -205,7 +218,8 @@ hiddenLayerSize = [100 numberNeurons];
 net = patternnet(hiddenLayerSize, trainFcn);
 
 
-% Setup Division of Data for Training, Validation, Testing
+% Setup Division of Data for Training, Validation, Testing. No need for
+% test data since we test the model separately after training.
 net.divideParam.trainRatio = 80/100;
 net.divideParam.valRatio = 20/100;
 net.divideParam.testRatio = 0/100;
@@ -230,7 +244,7 @@ sucessRateTraining = 1- percentErrors
 end
 
 function sucessRateTesting = networkTesting(net,data,target)
-
+% tests the network on the test batch.
 x = data';
 t = target';
 y = net(x);
