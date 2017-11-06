@@ -1,0 +1,42 @@
+\section{MLP Classifier}
+	    \pagestyle{mario}
+	    \sectionauthor{M. Gini}
+	   
+\subsection{Data Preprocessing and Augmentation}
+	    
+\begin{itemize}
+   	\item Normalization
+  	
+  	The input data is normalized to lie within the range [0,1].
+    	
+  	\item Mean subtraction
+	    	
+   	To further normalize the data, a the mean is subtracted on a per-pixel basis.
+	    	
+   	\item Data augmentation
+	    	
+   	Experience shows that a larger training data set increases network performance
+\end{itemize}
+	    
+\subsection{Network Structure}
+	    
+\begin{itemize}
+   	\item Basic structure
+	    	
+   	Since this is a classification problem, parts of the network structure are fixed. The last layer consists of 10 nodes and a in a "softmax" configuration. PICTURE of basic structure.
+	    	
+	\item Number of hidden layers/nodes
+	    	
+	Parameter search over 1-3 hidden layers, 1-500 neurons
+	    	
+	    	
+\end{itemize}
+	    
+	    
+\subsection{Optimization of Further Network Parameters}
+	    
+\begin{itemize}
+   	\item Different learning rates
+	    	
+   	\item Different optimization methods
+\end{itemize}
