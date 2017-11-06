@@ -3,9 +3,9 @@
 
 % define the training and test batch size.
 
-options.trainsize = 20000;       %value between 1 and 50000
-options.preprocessing = 'none';
-options.augmentation = 'none';  %valid values are 'none', 'mirror' and 'all'
+options.trainsize = 50000;       %value between 1 and 50000
+options.preprocessing = 'all';
+options.augmentation = 'mirror';  %valid values are 'none', 'mirror' and 'all'
 options.trainFcn =  'trainscg';
 options.layers = [100 50];
 
@@ -14,7 +14,7 @@ options.layers = [100 50];
 dataAquisition();
 
 
-[Data_cpy, Labels_cpy] = dataPreProcAndAug(cifarData,cifarLabels,trainSize,options);
+[Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,trainSize,options);
 
 %[cifarData2, mu, invMat, whMat] = whiten(cifarData);
 
@@ -25,13 +25,13 @@ dataAquisition();
 % [net, sucessRateTraining] = networkTraining(50,cifarDataMirrored,cifarLabelsMirrored);
 % sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-sucessRateTesting = zeros(10,1);
+sucessRateTesting = zeros(1,1);
 
-for i = 1 : 10
-
+for i = 1 : 1
+ tic
  [net, sucessRateTraining] = networkTraining(Data_cpy,Labels_cpy,options);
- sucessRateTesting(i,1) = networkTesting(net, cifarData(50001:60000,:), cifarLabels(50001:60000,:));
- 
+ sucessRateTesting(i,1) = networkTesting(net, test_cpy, cifarLabels(50001:60000,:));
+ toc
 end
 
 
