@@ -5,7 +5,6 @@
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{setspace}
 \usepackage{url}
-
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -16,7 +15,6 @@
 \usepackage{gensymb}
 \usepackage{wrapfig}
 \usepackage[square,super,comma]{natbib}
-% \usepackage{url}
 \usepackage{hyperref}
 \usepackage{multicol}
 \usepackage{multirow}
@@ -51,7 +49,7 @@
 
 % \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-% \usepackage[nottoc]{tocbibind} %Adds "References" to the table of contents
+\usepackage[nottoc]{tocbibind} %Adds "References" to the table of contents
 
 \usepackage{graphicx}
 \graphicspath{{images/},{../images/}}
@@ -82,10 +80,6 @@
 \usepackage{float}
 
 \numberwithin{equation}{section}
-
-
-
-
 
 \begin{document}
     \begin{titlepage}
@@ -120,7 +114,8 @@
 \input{chapters/CNNNetwork}
 \input{chapters/Conclusion}
 
-\bibliography{bibliography}
 \bibliographystyle{unsrtnat}
+\bibliography{bibliography}
+
 
 \end{document}
