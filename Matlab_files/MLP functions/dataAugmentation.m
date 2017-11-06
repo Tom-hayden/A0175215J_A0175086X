@@ -1,7 +1,7 @@
 function [augData, augLabels] = dataAugmentation(dataSet,dataLabels,trainSize,onlyFlip)
 % augments the data by flipping and rotating it.
 
-imgData = uint8(zeros(32,32,3,trainSize));
+imgData = zeros(32,32,3,trainSize);
 
 for i = 1:trainSize
     imgData(:,:,:,i) = rot90(reshape(dataSet(i,:),[32,32,3]),3);

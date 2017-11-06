@@ -1,5 +1,7 @@
-function [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,trainSize,options)
+function [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options)
 %preprocess and augment the data.
+
+trainSize = options.trainsize;
 
 if strcmp(options.preprocessing,'all')
     [Data_cpy, test_cpy] = dataPreProcessing(cifarData, trainSize);

@@ -13,8 +13,7 @@ options.layers = [100 50];
 %First aquire all data. This should not be changed.
 dataAquisition();
 
-
-[Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,trainSize,options);
+[Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options);
 
 %[cifarData2, mu, invMat, whMat] = whiten(cifarData);
 
