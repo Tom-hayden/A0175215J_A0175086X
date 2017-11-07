@@ -50,7 +50,6 @@
 % \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[nottoc]{tocbibind} %Adds "References" to the table of contents
-
 \usepackage{graphicx}
 \graphicspath{{images/},{../images/}}
 \usepackage{wrapfig}
@@ -63,18 +62,15 @@
   \@afterheading%
 }
 \makeatother
-
 \usepackage{titlesec}
 
 \setcounter{secnumdepth}{4}
-
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \usepackage{subfiles}
-
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
@@ -82,30 +78,9 @@
 \numberwithin{equation}{section}
 
 \begin{document}
-    \begin{titlepage}
-
-    \begin{center}
-    \vspace*{6cm}
-    \centering
-    \Huge
-    { CIFAR-10 Image Recognition }
-    \vspace{2cm}
-
-    \Huge
-    {EE4305 Introduction to Fuzzy/Neural Systems}
-    \vspace{0.5cm}
-    
-    \Large
-    {Mario Gini
-
-    Thomas Hayden}
-    \vfill
-    \vspace{0.8cm}
-    \end{center}
-    \end{titlepage}
-
-    \newpage
-    \tableofcontents
+\input{chapters/titelpage}
+\newpage
+\tableofcontents
 
 \input{chapters/Introduction}
 \input{chapters/litReviewGeneral}
@@ -116,6 +91,5 @@
 
 \bibliographystyle{unsrtnat}
 \bibliography{bibliography}
-
 
 \end{document}

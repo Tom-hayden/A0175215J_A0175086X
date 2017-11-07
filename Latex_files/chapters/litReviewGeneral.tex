@@ -1,28 +1,34 @@
-\section{Literature Review on Neural Networks}
+\section{Literature Review on Artificial Neural Networks}
      \pagestyle{mario}
      \sectionauthor{M. Gini}
      
-This section gives a literature review on the broad topic of neural networks. Section \ref{sec:litReviewCifar} gives a more specific review on neural network designed to classify the CIFAR-10 dataset. The significance and applications will be reviewed in section \ref{subsec:signif} while recent trends and accomplishments are discussed in section \ref{subsec:trends}.
+This section gives a literature review on the broad topic of artificial neural networks (ANN). A more specific review on ANN designed to classify the CIFAR-10 dataset is found in Section \ref{sec:litReviewCifar}. The significance and applications of ANN will be reviewed in Section \ref{subsec:signif} while recent trends and accomplishments are discussed in Section \ref{subsec:trends}.
 
-\subsection{Significance and Applications of Neural Networks}\label{subsec:signif}
+\subsection{Significance and Applications of Artificial Neural Networks}\label{subsec:signif}
 
-This subsection will illustrate the significance and applications of neural networks.
+This subsection will illustrate the significance and applications of ANN. Increasing computer power shifted the focus of research towards deep ANN and similar architectures which are coined under the term "deep learning". These powerful  deep ANN are used in a variety of applications\cite{wang2015survey}\cite{lecun2015deep}.
 
-One of the most important applications of neural networks is computer vision. Ever since
+ANN are significant because they can work as a black box model. For example, an ANN can be trained to classify images into different categories. The performance can be enhanced by data preprocessing, augmentation and mainly by finding an appropriate network architecture. No a-priori knowledge of the classification process itself is required. This makes deep ANN suited for applications where such knowledge is difficult to obtain. Character and speech recognition are two further problems which are very hard to . In speech recognition, deep ANN have been shown to outperform other methods on a variety of speech recognition benchmarks, sometimes by a large margin\cite{hinton2012deep}.
 
-The significance of neural networks lies in the fact that the are able to achieve very high performance on tasks which are very difficult with other techniques.
+However, the fact that ANN do not incorporate much of a-priori knowledge is not only positive. As a consequence, a trained model gives little insight into its inner workings and optimal network architectures are basically found through a trial-and-error process. Most design guidelines for deep learning methods are therefore based on empirical knowledge instead of theoretical foundations.
+
+There is effort going on to better understand the computations deep ANN perform at each laver, with a few interesting visualizations available\cite{mordvintsev2015}\cite{yosinski2015understanding}. In general, each layer extracts higher level features of the input data until the last layer finally classifies the input.
 
 \subsection{Recent Trends and Accomplishments}\label{subsec:trends}
+
+One of the first big accomplishments of NN, specifically of convolutional neural networks (CNN), was during the ImageNet competition 2012 when a deep network won \cite{krizhevsky}.
 
 Recent trends and accomplishments of neural networks are discussed in this subsection. Since neural networks are such a broad topics, only two recent accomplishments are looked at in detail: The AlphaGo computer program and adversial examples. AlphaGo is a great example to illustrate recent trends and is also considered one of the biggest accomplishments of deep neural networks up to date. Adversial examples can easily fool very different kinds of neural networks and are therefore a great example to show that enthusiasm maybe should be insulated.
 
 AlphaGo is a computer program developed by DeepMind, a company owned by Google. It uses deep learning and is able to beat the world champion. This gained considerable media coverage since it is a feat experts thought would still be a decade away [CITE]. The game Go is considered the most complex board game, with a number of legal positions of in the order of magnitude of $10^{170}$\cite{tromp2006combinatorics}.
 
+Dedicated hardware is developed to accelerate the training process of a deep ANN. The most notable example is the Tensor Processing Unit developed by Google which achieves a 15- to 30 fold performance compared to a contemporary GPU or CPU\cite{jouppi2017datacenter}.
 
 \cite{silver2016mastering}
 \cite{silver2017mastering}
 
 Interesting development: Adversial examples
+
 
 Adversial examples are a recalcitrant problem. It is a potential security problem. Studying them can im
 \cite{Nguyen_2015_CVPR}
