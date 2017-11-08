@@ -5,7 +5,7 @@ function dataAquisition()
 % Outputs: - cifarData 60000*3072 array containing the image information.
 %          - cifarLabels 60000*10 array containging the image labels.
 
-addpath(genpath('..\cifar-10-batches-mat'));
+addpath(genpath('../cifar-10-batches-mat'))
 cifarData = zeros(60000,3072);
 cifarLabels = zeros(60000,10);
 
