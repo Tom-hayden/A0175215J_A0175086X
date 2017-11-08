@@ -2,16 +2,49 @@
 	\pagestyle{tom}
 	\sectionauthor{T. Hayden}
 
-The CIFAR-10 data set\cite{krizhevsky2009learning} is a well established data set in the machine learning community. It is challenging because it is a relatively small data set. Even so, excellent results, even exceeding human performance, have been obtained using a variety of CNN architectures\footnote{\url{http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html}}. At the time of writing, the highest published result on the CIFAR-10 data set was achieved in 2015 using a CNN with a fractional max-pooling set up to allow for a deeper network\cite{graham2014fractional}. Using a max-pooling architecture, an accuracy of $96.53\%$ was obtained. This is considerably better than human performance which has an accuracy of around $94\%$\cite{karpathy2011lessons}.
+The CIFAR-10 dataset\cite{krizhevsky2009learning} is a well established dataset in the machine learning community. It is challenging because it is a relatively small dataset. Even so, excellent results, even exceeding human performance, have been obtained using a variety of CNN architectures\footnote{\url{http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html}}. At the time of writing, the highest published result on the CIFAR-10 dataset was achieved in 2015 with accuracy of $96.53\%$. This is considerably better than human performance which has an accuracy of around $94\%$\cite{karpathy2011lessons}.
 
 \subsection{Data Augmentation}
-Like many other machine learning problems image, image classification will almost always benefit from additional data\cite{halevy2009unreasonable}. However, even when restricted to a particular dataset such as CIFAR-10 it is possible to generate more data using a technique called data augmentation\cite{cui2015data}. Data augmentation manipulates existing images to create 'new' data for use in training.
+Like many other machine learning problems, image classification will almost always benefit from additional data\cite{halevy2009unreasonable}. However, even when restricted to a particular dataset such as CIFAR-10 it is possible to generate more data using a technique called data augmentation\cite{cui2015data}. Data augmentation manipulates existing images to create 'new' data for use in training.
 
-Common methods to augment images for use in machine learning include mirroring, rotation and image translation\cite{krizhevsky}. Using these techniques it is possible to train on a data set that can be several times larger than the original data set. The leading architectures all made use of image augmentation\cite{graham2014fractional}\cite{mishkin2015all}\cite{springenberg2014striving}.
+Common methods to augment images for use in machine learning include mirroring, rotation and image translation\cite{krizhevsky}. Using these techniques it is possible to train on a dataset that can be several times larger than the original dataset. The leading architectures all made heavy use of data augmentation\cite{graham2014fractional}\cite{mishkin2015all}\cite{springenberg2014striving}.
 
-\subsection{Fractional Max-pooling}
-In a standard CNN, convolutional layers are interspaced with max-pooling layers. These max-pooling layers serve to down sample the data. This allows the CNN to be somewhat spatially invariant to the positions of the features.
+\subsection{State of the art architectures for classifying the CIFAR-10 dataset}
 
-\subsection{Layer-sequential unit-variance (LSUV) initialization}
+In this section, the results of several different CNN architectures are presented. It should be noted that these architectures were not designed specifically to perform on the CIFAR-10 dataset. As such, they may not be fully optimised and it is likely that they could be improved slightly.
+\subsubsection{Fractional Max-pooling}
+In a standard CNN, convolutional layers are often interspaced with 2x2 max-pooling layers. These max-pooling layers serve to downsample the data. This allows the CNN to be somewhat spatially invariant to the locations of the features and improve accuracy. However each max pooling layer also removes $75\%$ of the data\cite{graham2014fractional}. This in effect reduces the maximum depth of the CNN due to the disjoint nature of the max-pooling regions.
 
-\subsection{The All Convolutional Net}
+By using fractional max-pooling, it is possible to max-pool using a non-integer mask size. In this manner, the size of the hidden layers is reduced by a lesser amount and it is possible to create deeper networks without having to add consecutive convolutional layers. This is important as generally deeper networks will lead to stronger classifiers\cite{he2016deep}. However, deeper networks are also in general more expensive to train.
+
+An architecture based on fractional Max-pooling currently has the highest published classification accuracy on the CIFAR-10 dataset at $96.53\%$. This architecture also made heavy use of data augmentation. Additionally, the model was 'fine-tuned' after initial training by re-training on the original dataset for a few epochs using a low learning.
+
+\subsubsection{The All Convolutional Net(ALL-CNN)}
+
+In this architecture\cite{springenberg2014striving} a CNN consisting entirely of convolutional layers is proposed. Max-pooling layers are instead replaced with convolutional layers with increased stride. These increased stride layers act in a similar way to max-pool layers in that they downsample the data and allow the CNN somewhat invariant feature location. This architecture has an accuracy of $95.59\%$ which is the 2nd highest published result. This architecture also makes heavy use of data augmentation.
+
+\subsubsection{Layer-sequential unit-variance (LSUV) initialization}
+LSUV initialisation provides a method to initialise deep CNN. This produces networks with better accuracy than uninitialised networks. In addition LSUV greatly accelerates the training of CNNs. An architecture based on the LSUV method machine managed to achieve an accuracy of $94.16\%$. Note that this only used a moderate amount of data augmentation.
+
+It is important to stress the use of data augmentation when looking at these results. Table \label{tab:SOA_res} shows the results of the three leading architectures along with the amount of data augmentation. Moderate data augmentation consists of mirroring in the horizontal axis and small translations in each axis. Extreme data augmentation involves upscaling the images to $126\times126$ pixel images and performing a variety of operations such as shearing, colour augmentation, rotation, translation and scaling. It may be the case that with additional data augmentation, LSUV outperforms the Max-Pooling approach.
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{||c || c c c||}
+ \hline
+ Data Augmentation & Fractional Max-Pooling & ALL-CNN & LSUV \\ [0.5ex]
+ \hline\hline
+ None & - & $90.92\%$ & - \\
+ \hline
+ Moderate & - & $92.75\%$ & $93.94\%$\\
+ \hline
+ Extreme & $96.53\%$ & $95.59\%$ & - \\ [1ex]
+ \hline
+
+\end{tabular}
+\caption{Table showing the results of the leading CIFAR-10 architectures.}
+\end{center}
+\end{table}
+
+
+\subsection{Application areas of image recognition algorithms}
