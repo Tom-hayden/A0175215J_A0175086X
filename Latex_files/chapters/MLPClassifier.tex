@@ -1,6 +1,6 @@
 \section{Multi-Layer Perceptron Classifier}
 	    \pagestyle{mario}
-	    \sectionauthor{M. Gini \& T. Hayden}
+	    \sectionauthor{M. Gini \& T. M. Hayden} %\printinunitsof{cm}\prntlen{\linewidth} this shows linewidth in cm
 
 This section presents the multi-layer perceptron (MLP) classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the basic software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes what effect varying further hyperparameters like the error function or training algorithm have on the classification performance.
 
@@ -29,6 +29,20 @@ b) on the size of the training data
   	The input data is to the network consists of a 3072*1 array where the entries represent the raw pixel values. The pixel values are in the range [0,255]. To avoid any numerical issues and normalize the data, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype is changed from the integer format to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data.
   	
   	Optionally, we conduct experiments with whitened data. \textcolor{red}{here some plot to show effect of whitened data}
+  	
+  	\begin{figure}[h!]
+  		\centering
+  		\includegraphics{images/dataAugmentation}
+  		\caption{Hello Boy}
+  		\label{fig:test1}
+  	\end{figure}
+  	
+  	\begin{figure}[h!]
+  		\centering	  		
+  		\includegraphics{images/numberlayers}
+  	  	\caption{Hello Boy2}
+  	  	\label{fig:test2}
+  	 \end{figure}
   	
   	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. The CIFAR-10 dataset consists of 60000 images, with 10000 specifically labeled for testing. For our performance analysis, we always use the provided test batch. The effect of varying training batch size can be seen below \textcolor{red}{here some plot of varying training size}
   	
