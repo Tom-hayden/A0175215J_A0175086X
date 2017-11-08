@@ -1,3 +1,17 @@
 \section{Literature Review on the CIFAR-10 dataset}\label{sec:litReviewCifar}
-	\pagestyle{mario}
+	\pagestyle{tom}
 	\sectionauthor{T. Hayden}
+
+The CIFAR-10 data set\cite{krizhevsky2009learning} is a well established data set in the machine learning community. It is challenging because it is a relatively small data set. Even so, excellent results, even exceeding human performance, have been obtained using a variety of CNN architectures\footnote{\url{http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html}}. At the time of writing, the highest published result on the CIFAR-10 data set was achieved in 2015 using a CNN with a fractional max-pooling set up to allow for a deeper network\cite{graham2014fractional}. Using a max-pooling architecture, an accuracy of $96.53\%$ was obtained. This is considerably better than human performance which has an accuracy of around $94\%$\cite{karpathy2011lessons}.
+
+\subsection{Data Augmentation}
+Like many other machine learning problems image, image classification will almost always benefit from additional data\cite{halevy2009unreasonable}. However, even when restricted to a particular dataset such as CIFAR-10 it is possible to generate more data using a technique called data augmentation\cite{cui2015data}. Data augmentation manipulates existing images to create 'new' data for use in training.
+
+Common methods to augment images for use in machine learning include mirroring, rotation and image translation\cite{krizhevsky}. Using these techniques it is possible to train on a data set that can be several times larger than the original data set. The leading architectures all made use of image augmentation\cite{graham2014fractional}\cite{mishkin2015all}\cite{springenberg2014striving}.
+
+\subsection{Fractional Max-pooling}
+In a standard CNN, convolutional layers are interspaced with max-pooling layers. These max-pooling layers serve to down sample the data. This allows the CNN to be somewhat spatially invariant to the positions of the features.
+
+\subsection{Layer-sequential unit-variance (LSUV) initialization}
+
+\subsection{The All Convolutional Net}

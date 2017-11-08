@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -86,5 +86,46 @@ Anh Nguyen, Jason Yosinski, and Jeff Clune.
 Ian~J Goodfellow, Jonathon Shlens, and Christian Szegedy.
 \newblock Explaining and harnessing adversarial examples.
 \newblock \emph{arXiv preprint arXiv:1412.6572}, 2014.
+
+\bibitem[Krizhevsky and Hinton(2009)]{krizhevsky2009learning}
+Alex Krizhevsky and Geoffrey Hinton.
+\newblock Learning multiple layers of features from tiny images.
+\newblock 2009.
+
+\bibitem[Graham(2014)]{graham2014fractional}
+Benjamin Graham.
+\newblock Fractional max-pooling.
+\newblock \emph{arXiv preprint arXiv:1412.6071}, 2014.
+
+\bibitem[Karpathy(2011)]{karpathy2011lessons}
+Andrej Karpathy.
+\newblock Lessons learned from manually classifying cifar-10.
+\newblock \emph{Published online at http://karpathy. github.
+  io/2011/04/27/manually-classifying-cifar10}, 2011.
+
+\bibitem[Halevy et~al.(2009)Halevy, Norvig, and
+  Pereira]{halevy2009unreasonable}
+Alon Halevy, Peter Norvig, and Fernando Pereira.
+\newblock The unreasonable effectiveness of data.
+\newblock \emph{IEEE Intelligent Systems}, 24\penalty0 (2):\penalty0 8--12,
+  2009.
+
+\bibitem[Cui et~al.(2015)Cui, Goel, and Kingsbury]{cui2015data}
+Xiaodong Cui, Vaibhava Goel, and Brian Kingsbury.
+\newblock Data augmentation for deep neural network acoustic modeling.
+\newblock \emph{IEEE/ACM Transactions on Audio, Speech and Language Processing
+  (TASLP)}, 23\penalty0 (9):\penalty0 1469--1477, 2015.
+
+\bibitem[Mishkin and Matas(2015)]{mishkin2015all}
+Dmytro Mishkin and Jiri Matas.
+\newblock All you need is a good init.
+\newblock \emph{arXiv preprint arXiv:1511.06422}, 2015.
+
+\bibitem[Springenberg et~al.(2014)Springenberg, Dosovitskiy, Brox, and
+  Riedmiller]{springenberg2014striving}
+Jost~Tobias Springenberg, Alexey Dosovitskiy, Thomas Brox, and Martin
+  Riedmiller.
+\newblock Striving for simplicity: The all convolutional net.
+\newblock \emph{arXiv preprint arXiv:1412.6806}, 2014.
 
 \end{thebibliography}
