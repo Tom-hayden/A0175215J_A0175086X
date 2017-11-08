@@ -1,15 +1,15 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Wang and Raj(2015)]{wang2015survey}
-Haohan Wang and Bhiksha Raj.
-\newblock A survey: Time travel in deep learning space: An introduction to deep
-  learning models and how deep learning models evolved from the initial ideas.
-\newblock \emph{arXiv preprint arXiv:1510.04781}, 2015.
+\bibitem[Deng et~al.(2014)Deng, Yu, et~al.]{deng2014deep}
+Li~Deng, Dong Yu, et~al.
+\newblock Deep learning: methods and applications.
+\newblock \emph{Foundations and Trends{\textregistered} in Signal Processing},
+  7\penalty0 (3--4):\penalty0 197--387, 2014.
 
 \bibitem[LeCun et~al.(2015)LeCun, Bengio, and Hinton]{lecun2015deep}
 Yann LeCun, Yoshua Bengio, and Geoffrey Hinton.
@@ -26,6 +26,12 @@ Geoffrey Hinton, Li~Deng, Dong Yu, George~E Dahl, Abdel-rahman Mohamed, Navdeep
 \newblock \emph{IEEE Signal Processing Magazine}, 29\penalty0 (6):\penalty0
   82--97, 2012.
 
+\bibitem[Krizhevsky et~al.(2012)Krizhevsky, Sutskever, and Hinton]{krizhevsky}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In \emph{Advances in neural information processing systems}, pages
+  1097--1105, 2012.
+
 \bibitem[Mordvintsev et~al.(2015)Mordvintsev, Olah, and Tyka]{mordvintsev2015}
 Alexander Mordvintsev, Christopher Olah, and Mike Tyka.
 \newblock {Inceptionism: Going Deeper into Neural Networks}, June 2015.
@@ -38,24 +44,11 @@ Jason Yosinski, Jeff Clune, Anh Nguyen, Thomas Fuchs, and Hod Lipson.
 \newblock Understanding neural networks through deep visualization.
 \newblock \emph{arXiv preprint arXiv:1506.06579}, 2015.
 
-\bibitem[Krizhevsky et~al.(2012)Krizhevsky, Sutskever, and Hinton]{krizhevsky}
-Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
-\newblock Imagenet classification with deep convolutional neural networks.
-\newblock In \emph{Advances in neural information processing systems}, pages
-  1097--1105, 2012.
-
 \bibitem[Tromp and Farneb{\"a}ck(2006)]{tromp2006combinatorics}
 John Tromp and Gunnar Farneb{\"a}ck.
 \newblock Combinatorics of go.
 \newblock In \emph{International Conference on Computers and Games}, pages
   84--99. Springer, 2006.
-
-\bibitem[Jouppi et~al.(2017)Jouppi, Young, Patil, Patterson, Agrawal, Bajwa,
-  Bates, Bhatia, Boden, Borchers, et~al.]{jouppi2017datacenter}
-Norman~P Jouppi, Cliff Young, Nishant Patil, David Patterson, Gaurav Agrawal,
-  Raminder Bajwa, Sarah Bates, Suresh Bhatia, Nan Boden, Al~Borchers, et~al.
-\newblock In-datacenter performance analysis of a tensor processing unit.
-\newblock \emph{arXiv preprint arXiv:1704.04760}, 2017.
 
 \bibitem[Silver et~al.(2016)Silver, Huang, Maddison, Guez, Sifre, Van
   Den~Driessche, Schrittwieser, Antonoglou, Panneershelvam, Lanctot,
@@ -65,6 +58,19 @@ David Silver, Aja Huang, Chris~J Maddison, Arthur Guez, Laurent Sifre, George
   Panneershelvam, Marc Lanctot, et~al.
 \newblock Mastering the game of go with deep neural networks and tree search.
 \newblock \emph{Nature}, 529\penalty0 (7587):\penalty0 484--489, 2016.
+
+\bibitem[Jouppi et~al.(2017)Jouppi, Young, Patil, Patterson, Agrawal, Bajwa,
+  Bates, Bhatia, Boden, Borchers, et~al.]{jouppi2017datacenter}
+Norman~P Jouppi, Cliff Young, Nishant Patil, David Patterson, Gaurav Agrawal,
+  Raminder Bajwa, Sarah Bates, Suresh Bhatia, Nan Boden, Al~Borchers, et~al.
+\newblock In-datacenter performance analysis of a tensor processing unit.
+\newblock \emph{arXiv preprint arXiv:1704.04760}, 2017.
+
+\bibitem[Chen(2016)]{chen2016evolution}
+Jim~X Chen.
+\newblock The evolution of computing: Alphago.
+\newblock \emph{Computing in Science \& Engineering}, 18\penalty0 (4):\penalty0
+  4--7, 2016.
 
 \bibitem[Silver et~al.(2017)Silver, Schrittwieser, Simonyan, Antonoglou, Huang,
   Guez, Hubert, Baker, Lai, Bolton, et~al.]{silver2017mastering}
@@ -81,10 +87,31 @@ Anh Nguyen, Jason Yosinski, and Jeff Clune.
 \newblock In \emph{The IEEE Conference on Computer Vision and Pattern
   Recognition (CVPR)}, June 2015.
 
+\bibitem[Szegedy et~al.(2013)Szegedy, Zaremba, Sutskever, Bruna, Erhan,
+  Goodfellow, and Fergus]{szegedy2013intriguing}
+Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan,
+  Ian Goodfellow, and Rob Fergus.
+\newblock Intriguing properties of neural networks.
+\newblock \emph{arXiv preprint arXiv:1312.6199}, 2013.
+
 \bibitem[Goodfellow et~al.(2014)Goodfellow, Shlens, and
   Szegedy]{goodfellow2014explaining}
 Ian~J Goodfellow, Jonathon Shlens, and Christian Szegedy.
 \newblock Explaining and harnessing adversarial examples.
 \newblock \emph{arXiv preprint arXiv:1412.6572}, 2014.
+
+\bibitem[Kurakin et~al.(2016)Kurakin, Goodfellow, and
+  Bengio]{kurakin2016adversarial}
+Alexey Kurakin, Ian Goodfellow, and Samy Bengio.
+\newblock Adversarial examples in the physical world.
+\newblock \emph{arXiv preprint arXiv:1607.02533}, 2016.
+
+\bibitem[Papernot et~al.(2017)Papernot, McDaniel, Goodfellow, Jha, Celik, and
+  Swami]{papernot2017practical}
+Nicolas Papernot, Patrick McDaniel, Ian Goodfellow, Somesh Jha, Z~Berkay Celik,
+  and Ananthram Swami.
+\newblock Practical black-box attacks against machine learning.
+\newblock In \emph{Proceedings of the 2017 ACM on Asia Conference on Computer
+  and Communications Security}, pages 506--519. ACM, 2017.
 
 \end{thebibliography}
