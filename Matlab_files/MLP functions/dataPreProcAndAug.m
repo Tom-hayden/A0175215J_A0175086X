@@ -1,5 +1,9 @@
 function [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options)
-%preprocess and augment the data.
+%This function call the dataPreProcessing and the dataAugmentation function
+%with the appropriate arguments which are provided in the 'options' object.
+%Preprocessing normalizes the data to the range [0,1] and subtracts the
+%per-channel mean.
+%Augmentation either mirrors the dataset or mirrors and rotates it.
 
 trainSize = options.trainsize;
 
@@ -21,5 +25,3 @@ if strcmp('mirror',options.augmentation)
     [Data_cpy, Labels_cpy] = dataAugmentation(Data_cpy,Labels_cpy,trainSize,true);
 end
 end
-
-%Data has now been preprocessed and augmented and it is time to train.

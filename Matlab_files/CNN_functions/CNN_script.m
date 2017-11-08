@@ -1,5 +1,5 @@
-%This script attempts to create and train a MLP classifier for use on the
-%CIFAR-10 data set.
+% This file implements a CNN classifier.
+% Tom Hayden, Mario Gini
 
 %Add cifar to path.
 
@@ -58,7 +58,6 @@ layers = [
     softmaxLayer
     classificationLayer];
  
-
 options = trainingOptions('sgdm',...
     'LearnRateSchedule','piecewise',...
     'LearnRateDropFactor',0.2,...
@@ -68,6 +67,3 @@ options = trainingOptions('sgdm',...
     'VerboseFrequency',20);
 
 convnet = trainNetwork(img_data,img_labels,layers,options);
-
-
-

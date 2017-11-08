@@ -26,8 +26,6 @@ net.divideParam.trainRatio = 80/10;
 net.divideParam.valRatio = 20/100;
 net.divideParam.testRatio = 0/100;
 
-
-
 % Performance function
 net.performFcn = 'crossentropy';
 

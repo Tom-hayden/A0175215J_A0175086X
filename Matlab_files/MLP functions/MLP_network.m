@@ -3,11 +3,11 @@
 
 % define the training and test batch size.
 
-options.trainsize = 5000;       %value between 1 and 50000
-options.preprocessing = 'none';
+options.trainsize = 20000;       %value between 1 and 50000
+options.preprocessing = 'none'; %valid values are 'none' and 'all'
 options.augmentation = 'none';  %valid values are 'none', 'mirror' and 'all'
 options.trainFcn =  'trainscg';
-options.layers = [100 50];
+options.layers = [];
 
 
 %First aquire all data. This should not be changed.
@@ -22,11 +22,11 @@ dataAquisition();
 % [net, sucessRateTraining] = networkTraining(50,cifarDataMirrored,cifarLabelsMirrored);
 % sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-sucessRateTesting = zeros(9,5);
-trainTime = zeros(9,5);
+sucessRateTesting = zeros(5,5);
+trainTime = zeros(5,5);
 
-for i = 1 : 9
-    options.trainsize = options.trainsize + 5000;
+for i = 1 : 5
+    options.layers = [options.layers 50];
     
     for j = 1 : 5
         [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options);
@@ -37,9 +37,6 @@ for i = 1 : 9
     end
     
 end
-
-
-
 
 % View the Network
 % view(net)
