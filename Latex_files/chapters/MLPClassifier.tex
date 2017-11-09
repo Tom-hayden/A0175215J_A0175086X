@@ -1,4 +1,4 @@
-\section{Multi-Layer Perceptron Classifier}
+\section{Multi-Layer Perceptron Classifier}\label{sec:MLP}
 	    \pagestyle{mario}
 	    \sectionauthor{M. Gini \& T. M. Hayden} %\printinunitsof{cm}\prntlen{\linewidth} this shows linewidth in cm
 
@@ -9,6 +9,10 @@ This section presents the multi-layer perceptron (MLP) classifier designed to cl
 MATLAB's Neural Networks toolbox is employed to implement the MLP classifier. The toolbox provides convenient algorithms and applications to design the MLP. A network training function with a convenient graphical user interface (GUI) to observe the progress is included as well. Figure \ref{fig:NNtool} shows the GUI.
 
 Since this is a classification problem, parts of the network structure are given. The output of the MLP should be a prediction of to which class the input belongs to. This is accomplished with the help of the softmax function, also called normalized exponential function. Equation \ref{eq:softmax} shows the formula of such a function. A softmax layer is then used as the last layer. It gets a $K$-dimensional input vector $\boldsymbol{z}$ of arbitrary real values and "squashes" it into a $K$-dimensional output vector $\sigma(\boldsymbol{z})$ of real values in the range $[0,1]$. In our case, $K=10$ and the output values represent the probabilities that the input belongs to the respective class. The class with the highest probability then constitutes the predicition of the MLP.
+
+Every ANN will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data vector. In the case of CIFAR-10 the input size is $1*3072$, the number of pixels per image.
+
+In addition to the input layer, each network will also have an output layer. The size of the output layer is also defined by the format of the data. In the the case of CIFAR-10, the output layer is a softmax layer with 10 nodes corresponding to each class label.
 
 \begin{equation}\label{eq:softmax}
 \sigma(\boldsymbol{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}\quad \textrm{for}\quad j = 1,...~K.
@@ -72,75 +76,54 @@ Data preprocessing and augmentation take place before the data is fed into the n
    	  	\caption{Comparison of network performance with and without data augmentation. The errorbars represent one standard deviation.}
    	  	\label{fig:dataAugmentation}
    	\end{figure}
+   	
+   	\begin{figure}[h!]
+   		\centering
+   		\includegraphics{images/DataAugDemo.png}
+   		\caption{Comparison of network performance with and without data augmentation. The errorbars represent one standard deviation.}
+   		\label{fig:dataAugDemo}
+   	\end{figure}   	
+   	
+   	
+   	
 \FloatBarrier
 
 \subsection{Optimization of Network Structure}\label{subsec:netStruct}
 
-Choosing the correct architecture of a neural network remains a complicated area of study which is still not fully understood\cite{andersen1999cross}. For any given problem there are essentially an infinite number of valid MLP architectures. There are many different approaches to architecture selection but none are foolproof\cite{andersen1999cross}.
+Choosing the correct architecture of a neural network remains an area of study which is still not fully understood\cite{andersen1999cross}. For a given problem, there is a variety of valid MLP architectures. Approaches to choose an architecture are mostly based on heuristics and therefore not foolproof\cite{andersen1999cross}.
 
-\subsubsection{Layers of the MLP}
+\subsubsection{Number of Hidden Layers}
 
-Every neural network, including MLPs, will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data. In the case of CIFAR-10 the input size is $32\times32\times3$, the size of the input image data.
-
-In addition to the input layer, each network will also have an output layer. The size of the output layer is also defined by the format of the data. In the the case of CIFAR-10, the output layer is a softmax layer with 10 nodes corresponding to each class label.
-
-There can be an arbitrarily large number of hidden layers. However performance gains from addition additional layers beyond the first are very small or even negligible. Additionally adding more layers increases the chance that the classifier finds a local minima\cite{de1993backpropagation}. Figure \ref{fig:layers} shows the effect of adding additional layers to our MLP classifier. Note that adding additional layers after the 2nd has almost no impact on the test accuracy.
+In general, a MLP can have an arbitrarily large number of hidden layers. However, MLP architectures with a large number of hidden layers are not common. Additionally, adding more layers increases the chance that the classifier finds a local minimum\cite{de1993backpropagation}. Figure \ref{fig:layers} shows the effect of varying the number of hidden layers of the default MLP classifier. Note that the test accuracy remains almost constant for more than two hidden layers.
 
 \begin{figure}[h!]
     \centering
     \includegraphics{images/numberlayers}
-    \caption{Effect of adding additional layers to the MLP classifier}
+    \caption{Effect of varying the number of hidden layers of the default MLP classifier. The errorbars represent one standard deviation of the averaging process.}
     \label{fig:layers}
  \end{figure}
 
 
-c)on the training of the MLP
-\begin{itemize}
-   	\item Varying the number of neurons
-
-	\begin{figure}[h!]
-   		 \centering
-   		 \includegraphics{images/surfacelayers}
-   		 \caption{Hello Boy2}
-   		 \label{fig:surfaceLayers}
-    \end{figure}
-
-	\item Varying the number of layers
-
-	  	\begin{figure}[h!]
-	  		\centering
-	  		\includegraphics{images/numberlayers}
-	  		\caption{Hello Boy2}
-	  		\label{fig:test2}
-	  	\end{figure}
-\end{itemize}
+\begin{figure}[h!]
+    \centering
+    \includegraphics{images/surfacelayers}
+   	\caption{Hello Boy2}
+   	\label{fig:surfaceLayers}
+\end{figure}
 
 \FloatBarrier
+
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
-Hyperparameter selection for neural networks such as MLPs has become an interesting field of research with many interesting algorithms being used to estimate good parameters to use\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due to our limited resources. Our approach instead relied on performing a limited number of trails to find trends. From these general trends and our knowledge of MLP classifiers, we then estimated good parameters to use.
 
+Hyperparameter selection for ANN such as MLP has become an active field of research with various algorithms being used to estimate optimal parameters\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due to our limited resources. Our approach instead relied on performing a limited number of trails to find trends. From these general trends and our knowledge of MLP classifiers, we then estimated good parameters to use.
 
-d) on the performance of the MLP with different objective functions and optimization methods
-
-\textcolor{red}{Some pic of the confusion matrix}
-
-\begin{itemize}
-   	\item Different learning rates
-
-   	\item Different optimization methods
-
-   	\item Different performance functions
-   	There are six different performance functions available in the MATLAB environment:
-
-
-\end{itemize}
 e)any other interesting observation that you think are pertinent (e.g. effect of learning rate on convergence speed).
 
 \subsubsection{Learning Rate}
 
 Choosing the learning rate for a MLP classifier can be a challenging process. There is no approach that will work optimally for every dataset. A learning rate that is too high can overshoot the solution and become unstable. However low learning rates can become stuck in local minima or take a long time to train. A good solution is to pick a high learning rate that can pass over local minima and  to gradually decrease the learning rate so that the classifier does not become unstable. This will result in a classifier which initially follows general trends and 'explores' a large portion of the parameter space. Later on the smaller learning rate will allow for the model to be fine tuned into a particular solution.
 
-The effects of changing the learning rate in our model can be seen in figure \ref{fig:learningRate}. The figure shows that increased learning rates, in general, had a positive effect on model accuracy.
+The effects of changing the learning rate in our model can be seen in Figure \ref{fig:learningRate}. The figure shows that increased learning rates, in general, had a positive effect on model accuracy.
 
 
 \begin{figure}[h!]
@@ -150,8 +133,45 @@ The effects of changing the learning rate in our model can be seen in figure \re
     \label{fig:learningRate}
  \end{figure}
 
- \subsubsection{Performance function}
+\FloatBarrier
+ \subsubsection{Performance Function}
+ 
+ The performance function is used to measure the error that a specific input produces in the network. The error expression is then used in the training algorithm, e.g. a variation of the backpropagation method. MATLAB offers the following different performance functions:
+ 
+ \begin{itemize}
+ 	\item SAE, the sum absolute error function
+ 	\item SSE, the sum squared error function
+ 	\item MAE, the mean absolute error function
+ 	\item MSE, the mean squared error function
+ 	\item Crossentropy error function
+ \end{itemize}
+ 
+ As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Crossentropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the crossentropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks
+ 
+ \begin{figure}[h!]
+ 	\centering
+ 	\includegraphics{images/performFct}
+ 	\caption{Comparison of the test accuracy of the default MLP using different performance functions.}
+ 	\label{fig:performFct}
+ \end{figure}
 
- \subsubsection{Activation function}
+ \subsubsection{Activation Function}
+ 
+ The activation function controls the firing of a single neuron. After multiplying the input with the weight and bias vector, the result is fed into the activation function. The output of the activation function constitutes the output of the neuron. Again, MATLAB offers a variety of different activation functions. For the sake of completeness, all activation functions are tested with the default MLP. The result is displayed in Figure \ref{fig:activationFct}.
+ 
+ \begin{figure}[h!]
+ 	\centering
+ 	\includegraphics{images/activationFct}
+ 	\caption{Comparison of the test accuracy of the default MLP using different activation functions.}
+ 	\label{fig:activationFct}
+ \end{figure}
+ 
+ It can be seen that several activation functions are not suited for a MLP classification problem, e.g the 'netinv' and 'compnet' type. Furthermore, there is a class of activation functions which are very similar and all perform well on that specific problem. Specifically, sigmoid shaped activation functions seem to be the appropriate choice for our problem setting. 'tansig' and 'logsig' are quite similar and 'satlin' and 'satlins' can be viewed as linear approximations of those nonlinear activation functions. It is interesting to note that using the 'satlin' type results in the best performance.
 
- \subsubsection{Training fucntion}
+\FloatBarrier
+
+ \subsubsection{Training Function}
+ 
+\subsection{Optimized MLP}
+
+Here we present our optimized MLP.
