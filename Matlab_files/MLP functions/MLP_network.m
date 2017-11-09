@@ -8,7 +8,7 @@ options.preprocessing = 'all'; %valid values are 'none' and 'all'
 options.augmentation = 'none';
 options.trainFcn =  'trainscg';
 options.layers = [100 50];
-options.transferFcn = 'tansig'; % many valid options
+options.performFcn = 'crossentropy'; % many valid options
 
 
 %First aquire all data. This should not be changed.
@@ -21,14 +21,14 @@ dataAquisition();
 % [net, sucessRateTraining] = networkTraining(50,cifarDataMirrored,cifarLabelsMirrored);
 % sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-transferOptions = {'compet','elliotsig','hardlim','hardlims','logsig','netinv','poslin','purelin','radbas','radbasn','satlin','satlins','tansig','tribas'};
+performFcn = {'mae','mse','sae','sse','crossentropy','msesparse'};
 
-sucessRateTesting = zeros(14,5);
-trainTime = zeros(14,5);
+sucessRateTesting = zeros(6,5);
+trainTime = zeros(6,5);
 
-for i = 1:14
+for i = 1:6
   
-    options.transferFcn = transferOptions{i};
+    options.performFcn = performFcn{i};
     for k = 1 : 5
         [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options);
         tic

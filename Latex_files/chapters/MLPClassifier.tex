@@ -21,7 +21,9 @@ Since this is a classification problem, parts of the network structure are given
   	\label{fig:NNtool}
 \end{figure}
 
-The other hidden layers consist of standard MLP. MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
+The other hidden layers consist of standard MLP. The input to the MLP are the pixel values of the image. Preprocessing and augmentation as described in the next section is also done before the pixel values are fed into the network.
+
+MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
 
 \begin{itemize}
 	\item Training function: 
@@ -33,28 +35,18 @@ The other hidden layers consist of standard MLP. MATLAB offers lots of adjustabl
 	\item Training batch size: 20000 images
 	
 	\item Network structure: Two hidden layers, 100 neurons on the first layer and 50 neurons on the second layer.
+	
+	\item Dataset structure: 80\% are used for the training and 20\% are used for validation. The last 10000 images are specifically used for testing the performance of the MLP.
 \end{itemize}
-
-a) on the selection of the inputs and outputs of the MLP
 
 \FloatBarrier
 \subsection{Data Preprocessing and Augmentation}\label{subsec:preProp}
-Data preprocessing and augmentation.
 
-b) on the size of the training data 
+Data preprocessing and augmentation take place before the data is fed into the network. In the preprocessing step, the data is normalized and centered around the mean. In the augmentation step, the amount of data is augmented through simple operations like image flipping. 
  
 \subsubsection{Data Preprocessing}\label{subsub:dataPreProp}
 
-  	The input data is to the network consists of a 3072*1 array where the entries represent the raw pixel values. The pixel values are in the range [0,255]. To avoid any numerical issues and normalize the data, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype is changed from the integer format to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data.
-  	
-  	Optionally, we conduct experiments with whitened data. \textcolor{red}{here some plot to show effect of whitened data}
-  	  	
-  	\begin{figure}[h!]
-  		\centering	  		
-  		\includegraphics{images/numberlayers}
-  	  	\caption{Hello Boy2}
-  	  	\label{fig:test2}
-  	 \end{figure}
+  	Each image of the dataset is represented by a 32*32*3 array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is transformed into a 1*3072 array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype is changed from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
   	
   	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. The CIFAR-10 dataset consists of 60000 images, with 10000 specifically labeled for testing. For our performance analysis, we always use the provided test batch. The effect of varying training batch size can be seen below \textcolor{red}{here some plot of varying training size}
   	
@@ -68,14 +60,23 @@ b) on the size of the training data
    	  	\caption{Hello Boy}
    	  	\label{fig:test1}
    	\end{figure}
-   		    
+\FloatBarrier
+
 \subsection{Optimization of Network Structure}\label{subsec:netStruct}
 c)on the training of the MLP    
 \begin{itemize}
    	\item Varying the number of neurons	
-	\item Varying the number of layers	    	
+	\item Varying the number of layers
+	
+	  	\begin{figure}[h!]
+	  		\centering	  		
+	  		\includegraphics{images/numberlayers}
+	  		\caption{Hello Boy2}
+	  		\label{fig:test2}
+	  	\end{figure}	
 \end{itemize}
-	    
+
+\FloatBarrier
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
 d) on the performance of the MLP with different objective functions and optimization methods
 
@@ -85,5 +86,10 @@ d) on the performance of the MLP with different objective functions and optimiza
    	\item Different learning rates
 	    	
    	\item Different optimization methods
+   	
+   	\item Different performance functions
+   	There are six different performance functions available in the MATLAB environment:
+   	
+   
 \end{itemize}
 e)any other interesting observation that you think are pertinent (e.g. effect of learning rate on convergence speed).

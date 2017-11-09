@@ -17,12 +17,6 @@ target = target';
 hiddenLayerSize = options.layers;
 net = patternnet(hiddenLayerSize, trainFcn);
 
-% Change the type of activation function
-
-net.layers{1}.transferFcn = options.transferFcn;
-net.layers{2}.transferFcn = options.transferFcn;
-
-
 % Setup Division of Data for Training, Validation, Testing. No need for
 % test data since we test the model separately after training.
 net.divideFcn = 'divideblock';
@@ -31,11 +25,7 @@ net.divideParam.valRatio = 20/100;
 net.divideParam.testRatio = 0/100;
 
 % Performance function
-net.performFcn = 'crossentropy';
-
-% Learning rate.
-net.layerWeights{2,1}.LearnParam.lr = options.learningRate;
-net.layerWeights{3,2}.LearnParam.lr = options.learningRate;
+net.performFcn = options.performFcn;
 
 % Train the Network
 
