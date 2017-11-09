@@ -68,7 +68,7 @@ Data preprocessing and augmentation take place before the data is fed into the n
 \FloatBarrier
 \subsubsection{Data Augmentation}
 
-   	Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size leads to an increased performance. A natural approach is therefore to artificially increase the training batch size. Image flipping and image rotation are used. Figure \ref{fig:dataAugmentation} illustrates the performance gain from vertical image mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
+Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size leads to an increased performance. A natural approach is therefore to artificially increase the training batch size. Image flipping and image rotation are implemented. Figure \ref{fig:dataAugmentation} illustrates the performance gain from vertical image mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
 
    	\begin{figure}[h!]
 		\centering
@@ -77,13 +77,14 @@ Data preprocessing and augmentation take place before the data is fed into the n
    	  	\label{fig:dataAugmentation}
    	\end{figure}
    	
+Figure \ref{fig:dataAugDemo} illustrates the data augmentation process on a cat image. The image is mirrored and rotated three times by 90 degrees. This results in a 8-fold increase of the training data size.
+
    	\begin{figure}[h!]
    		\centering
    		\includegraphics{images/DataAugDemo.png}
-   		\caption{Comparison of network performance with and without data augmentation. The errorbars represent one standard deviation.}
+   		\caption{Illustration of the data augmentation process on a cat image.}
    		\label{fig:dataAugDemo}
    	\end{figure}   	
-   	
    	
    	
 \FloatBarrier
@@ -115,28 +116,24 @@ In general, a MLP can have an arbitrarily large number of hidden layers. However
 
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
 
-Hyperparameter selection for ANN such as MLP has become an active field of research with various algorithms being used to estimate optimal parameters\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due to our limited resources. Our approach instead relied on performing a limited number of trails to find trends. From these general trends and our knowledge of MLP classifiers, we then estimated good parameters to use.
+Hyperparameter selection for ANN such as MLP has become an active field of research with various algorithms being used to estimate optimal parameters\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due limited computational resources. Instead, a few parameter are varied while using the default MLP structure. Optimal parameters are then estimated from these trends.
+%\subsubsection{Learning Rate}
+%
+%Choosing the learning rate for a MLP classifier can be a challenging process. There is no approach that will work optimally for every dataset. A learning rate that is too high can overshoot the solution and become unstable. However low learning rates can become stuck in local minima or take a long time to train. A good solution is to pick a high learning rate that can pass over local minima and  to gradually decrease the learning rate so that the classifier does not become unstable. This will result in a classifier which initially follows general trends and 'explores' a large portion of the parameter space. Later on the smaller learning rate will allow for the model to be fine tuned into a particular solution.
+%
+%The effects of changing the learning rate in our model can be seen in Figure \ref{fig:learningRate}. The figure shows that increased learning rates, in general, had a positive effect on model accuracy.
+%
+%\begin{figure}[h!]
+%    \centering
+%    \includegraphics{images/learningRate.eps}
+%    \caption{Comparison of the test accuracy of the default MLP using different learning rates.}
+%    \label{fig:learningRate}
+% \end{figure}
+%\FloatBarrier
 
-e)any other interesting observation that you think are pertinent (e.g. effect of learning rate on convergence speed).
-
-\subsubsection{Learning Rate}
-
-Choosing the learning rate for a MLP classifier can be a challenging process. There is no approach that will work optimally for every dataset. A learning rate that is too high can overshoot the solution and become unstable. However low learning rates can become stuck in local minima or take a long time to train. A good solution is to pick a high learning rate that can pass over local minima and  to gradually decrease the learning rate so that the classifier does not become unstable. This will result in a classifier which initially follows general trends and 'explores' a large portion of the parameter space. Later on the smaller learning rate will allow for the model to be fine tuned into a particular solution.
-
-The effects of changing the learning rate in our model can be seen in Figure \ref{fig:learningRate}. The figure shows that increased learning rates, in general, had a positive effect on model accuracy.
-
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics{images/learningRate.eps}
-    \caption{2+2=}
-    \label{fig:learningRate}
- \end{figure}
-
-\FloatBarrier
  \subsubsection{Performance Function}
  
- The performance function is used to measure the error that a specific input produces in the network. The error expression is then used in the training algorithm, e.g. a variation of the backpropagation method. MATLAB offers the following different performance functions:
+ The performance function is used to measure the error that a specific input produces in the network. The error expression is then used in the training algorithm which usually is a variation of the backpropagation method\cite{hecht1988theory}. MATLAB offers the following different performance functions:
  
  \begin{itemize}
  	\item SAE, the sum absolute error function
@@ -146,7 +143,7 @@ The effects of changing the learning rate in our model can be seen in Figure \re
  	\item Crossentropy error function
  \end{itemize}
  
- As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Crossentropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the crossentropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks
+ As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Crossentropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the crossentropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks.
  
  \begin{figure}[h!]
  	\centering
@@ -168,10 +165,21 @@ The effects of changing the learning rate in our model can be seen in Figure \re
  
  It can be seen that several activation functions are not suited for a MLP classification problem, e.g the 'netinv' and 'compnet' type. Furthermore, there is a class of activation functions which are very similar and all perform well on that specific problem. Specifically, sigmoid shaped activation functions seem to be the appropriate choice for our problem setting. 'tansig' and 'logsig' are quite similar and 'satlin' and 'satlins' can be viewed as linear approximations of those nonlinear activation functions. It is interesting to note that using the 'satlin' type results in the best performance.
 
-\FloatBarrier
+\subsubsection{Training Function}
 
- \subsubsection{Training Function}
+ The training function is the algorithm that dictates the training process of the network. Once again, MATLAB offers a wide selection of training algorithms. Most are variations of the backpropagation algorithm. Figure \ref{fig:trainingFct} shows the results of using various training algorithms on the default MLP structure.
  
-\subsection{Optimized MLP}
+ \begin{figure}[h!]
+ 	\centering
+ 	\includegraphics{images/trainingFct}
+ 	\caption{Comparison of the test accuracy of the default MLP using different training functions.}
+ 	\label{fig:trainingFct}
+ \end{figure}
+ 
+ All variations of the conjugate gradient backpropagation algorithm\cite{moller1993scaled} achieve good performance. It is interesting that the performance is superior compared to variations of simple gradient backpropagation. 'traindx' which uses momentum is the only gradient backpropagation variation which achieves similar performance than conjugate gradient backpropagation.
+ 
+ An advantage of conjugate gradient backpropagation algorithms is that they do not require a learning rate parameter. Since our investigations show that they are superior over other backpropagation methods, no further analysis on finding optimal learning rates is conducted.
+ 
+\subsection{Optimized Classifier}
 
 Here we present our optimized MLP.

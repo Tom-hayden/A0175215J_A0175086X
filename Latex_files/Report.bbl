@@ -1,4 +1,4 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{31}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -191,5 +191,16 @@ James~S Bergstra, R{\'e}mi Bardenet, Yoshua Bengio, and Bal{\'a}zs K{\'e}gl.
 \newblock Algorithms for hyper-parameter optimization.
 \newblock In \emph{Advances in Neural Information Processing Systems}, pages
   2546--2554, 2011.
+
+\bibitem[Hecht-Nielsen et~al.(1988)]{hecht1988theory}
+Robert Hecht-Nielsen et~al.
+\newblock Theory of the backpropagation neural network.
+\newblock \emph{Neural Networks}, 1\penalty0 (Supplement-1):\penalty0 445--448,
+  1988.
+
+\bibitem[M{\o}ller(1993)]{moller1993scaled}
+Martin~Fodslette M{\o}ller.
+\newblock A scaled conjugate gradient algorithm for fast supervised learning.
+\newblock \emph{Neural networks}, 6\penalty0 (4):\penalty0 525--533, 1993.
 
 \end{thebibliography}

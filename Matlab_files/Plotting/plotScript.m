@@ -90,44 +90,44 @@
 % Learning rate figure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% load data. Average over the 5 runs. 20k test batches are used with 50
-% nodes and a varying number of layers from 1 to 5.
-load('../MLP functions/SavedNets/LearnRate_0_001_0_01_0_1_1_10_100.mat')
-avgSuccessRateTesting3 = mean(sucessRateTesting,2);
-stdSuccessRateTesting3 = std(sucessRateTesting,0,2);
-xAxis2 = [0.001 0.01 0.1  1 10 100]';
-
-% just to be sure since these variable are newly loaded.
-clear sucessRateTesting trainTime;
-
-% Set up figure
-width = 15.99532; % this value is from latex dont change
-height = width*0.61803398875; % we use the golden ratio for maximum aestetics
-
-figure('Units', 'Centimeters','position', [5, 5, width, height]);
-
-%semilogx(xAxis2,100*avgSuccessRateTesting3);
-
-hAx=axes;
-hAx.XScale='log';
-xlim([10e-5 10e2]);
-hold all
-box on;
-errorbar(xAxis2,100*avgSuccessRateTesting3,100*stdSuccessRateTesting3)
-
-% specify axis limits
-yMin = 40;
-yMax = 48;
-ylim([yMin yMax])
-
-%set(gca,'YTick',yMin:2:yMax,'XTick',xMin:1:xMax,'TickLabelInterpreter','latex');
-ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
-xlabel({'Learning rate'},'interpreter','latex');
-title({'Test Accuracy for Varying Learning Rate'},'interpreter','latex');
-legend({'MLP Classifier with default settings'},'interpreter','latex','location','southeast');
-
-%this directly saves the .eps into the latex folder
-print('-depsc2','../../Latex_files/images/learningRate.eps');
+% % load data. Average over the 5 runs. 20k test batches are used with 50
+% % nodes and a varying number of layers from 1 to 5.
+% load('../MLP functions/SavedNets/LearnRate_0_001_0_01_0_1_1_10_100.mat')
+% avgSuccessRateTesting3 = mean(sucessRateTesting,2);
+% stdSuccessRateTesting3 = std(sucessRateTesting,0,2);
+% xAxis2 = [0.001 0.01 0.1  1 10 100]';
+% 
+% % just to be sure since these variable are newly loaded.
+% clear sucessRateTesting trainTime;
+% 
+% % Set up figure
+% width = 15.99532; % this value is from latex dont change
+% height = width*0.61803398875; % we use the golden ratio for maximum aestetics
+% 
+% figure('Units', 'Centimeters','position', [5, 5, width, height]);
+% 
+% %semilogx(xAxis2,100*avgSuccessRateTesting3);
+% 
+% hAx=axes;
+% hAx.XScale='log';
+% xlim([10e-5 10e2]);
+% hold all
+% box on;
+% errorbar(xAxis2,100*avgSuccessRateTesting3,100*stdSuccessRateTesting3)
+% 
+% % specify axis limits
+% yMin = 40;
+% yMax = 48;
+% ylim([yMin yMax])
+% 
+% %set(gca,'YTick',yMin:2:yMax,'XTick',xMin:1:xMax,'TickLabelInterpreter','latex');
+% ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
+% xlabel({'Learning rate'},'interpreter','latex');
+% title({'Test Accuracy for Varying Learning Rate'},'interpreter','latex');
+% legend({'MLP Classifier with default settings'},'interpreter','latex','location','southeast');
+% 
+% %this directly saves the .eps into the latex folder
+% print('-depsc2','../../Latex_files/images/learningRate.eps');
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %figure with a fancy surface
@@ -226,37 +226,35 @@ print('-depsc2','../../Latex_files/images/learningRate.eps');
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % figure for performance functions
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Default settings with varying performFct. The .mat file already contains
+%the avg and std files.
+load('../MLP functions/SavedNets/20ktest_default_differentPerformFct');
+
+%just to be sure since these variable are newly loaded.
+%clear sucessRateTesting trainTime;
+
+%Set up figure
+width = 15.99532; % this value is from latex dont change
+height = width*0.61803398875; % we use the golden ratio for maximum aestetics
+
+figure('Units', 'Centimeters','position', [5, 5, width, height]);
+
+% specify the axes
+yMin = 35;
+yMax = 45;
+
+histogram('Categories',performFcn,'BinCounts',100*avgSucessSorted, 'barwidth', 0.3);
+
+ylim([yMin yMax]);
+set(gca,'YTick',yMin:2:yMax,'TickLabelInterpreter','latex');
+ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
+xlabel({'Performance Function'},'interpreter','latex');
+title({'Test Accuracy for Different Performance Functions'},'interpreter','latex');
+
 % 
-% %Default settings with varying performFct. The .mat file already contains
-% %the avg and std files.
-% load('../MLP functions/SavedNets/20ktest_default_differentPerformFct');
-% avgSucessSorted = sort(avgSuccessRateTesting7);
-% 
-% 
-% %just to be sure since these variable are newly loaded.
-% clear sucessRateTesting trainTime;
-% 
-% %Set up figure
-% width = 15.99532; % this value is from latex dont change
-% height = width*0.61803398875; % we use the golden ratio for maximum aestetics
-% 
-% figure('Units', 'Centimeters','position', [5, 5, width, height]);
-% 
-% % specify the axes
-% yMin = 35;
-% yMax = 45;
-% 
-% histogram('Categories',performFcn,'BinCounts',100*avgSucessSorted, 'barwidth', 0.5);
-% 
-% ylim([yMin yMax]);
-% set(gca,'YTick',yMin:2:yMax,'TickLabelInterpreter','latex');
-% ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
-% xlabel({'Performance Function'},'interpreter','latex');
-% title({'Test Accuracy for Different Performance Functions'},'interpreter','latex');
-% 
-% % 
-% %this directly saves the .eps into the latex folder
-% print('-depsc2','../../Latex_files/images/performFct.eps');
+%this directly saves the .eps into the latex folder
+print('-depsc2','../../Latex_files/images/performFct.eps');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % figure for activation functions
@@ -292,3 +290,42 @@ print('-depsc2','../../Latex_files/images/learningRate.eps');
 % % 
 % %this directly saves the .eps into the latex folder
 % print('-depsc2','../../Latex_files/images/activationFct.eps');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% figure for training functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %Default settings with varying performFct. The .mat file already contains
+% %the avg and std files.
+% load('../MLP functions/SavedNets/train_Fcn');
+% avgSuccessRateTesting8 = mean(sucessRateTesting,2);
+% stdSuccessRateTesting8 = std(sucessRateTesting,0,2);
+% 
+% trainOptions = {'traincgb','traincgf','traincgp','traingd','traingda','traingdm','traingdx','trainoss','trainrp','trainscg','trainb'};
+% %just to be sure since these variable are newly loaded.
+% clear sucessRateTesting trainTime;
+% 
+% %Set up figure
+% width = 15.99532; % this value is from latex dont change
+% height = width*0.61803398875; % we use the golden ratio for maximum aestetics
+% 
+% figure('Units', 'Centimeters','position', [5, 5, width, height]);
+% 
+% % specify the axes
+% yMin = 5;
+% yMax = 50;
+% 
+% histogram('Categories',trainOptions,'BinCounts',100*avgSuccessRateTesting8, 'barwidth', 0.5,'DisplayOrder','ascend');
+% 
+% ylim([yMin yMax]);
+% set(gca,'YTick',yMin:5:yMax,'TickLabelInterpreter','latex');
+% ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
+% xlabel({'Training Function'},'interpreter','latex');
+% title({'Test Accuracy for Different Training Functions'},'interpreter','latex');
+% 
+% %this directly saves the .eps into the latex folder
+% print('-depsc2','../../Latex_files/images/trainingFct.eps');
+
+
+
+
