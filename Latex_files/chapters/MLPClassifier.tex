@@ -26,39 +26,51 @@ The other hidden layers consist of standard MLP. The input to the MLP are the pi
 MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
 
 \begin{itemize}
-	\item Training function: 
+	\item Training function: 'trainscg' which is the scaled conjugate gradient method.
 	
-	\item Loss function: cross entropy
+	\item Loss function: 'crossentropy' which penalizes
 	
-	\item Activation function: 'tansig', the hyperbolic tangent sigmoid activation function 
+	\item Activation function: 'tansig' which is the hyperbolic tangent sigmoid activation function 
 	
-	\item Training batch size: 20000 images
+	\item The training batch size is set to 20000 images. This constitutes a compromise between a good performance and a reasonable training time.
 	
-	\item Network structure: Two hidden layers, 100 neurons on the first layer and 50 neurons on the second layer.
+	\item As a default network structure, two hidden layers are employed with 100 and 50 neurons.
 	
-	\item Dataset structure: 80\% are used for the training and 20\% are used for validation. The last 10000 images are specifically used for testing the performance of the MLP.
+	\item Dataset structure: 80\% are used for the training and 20\% are used for validation. For the testing, the dedicated testing batch provided in the dataset is utilized.
+	
+	\item Weight initialization: The weights of the neurons are randmoly initialized. Since this leads to slightly different performances for each run, for the performance analysis each configuration is run five times and then the test accuracy is averaged.
 \end{itemize}
 
 \FloatBarrier
 \subsection{Data Preprocessing and Augmentation}\label{subsec:preProp}
 
-Data preprocessing and augmentation take place before the data is fed into the network. In the preprocessing step, the data is normalized and centered around the mean. In the augmentation step, the amount of data is augmented through simple operations like image flipping. 
+Data preprocessing and augmentation take place before the data is fed into the network. In the preprocessing step, the data is normalized and centered around the mean. In the augmentation step, the amount of data is augmented through operations like image flipping. 
  
 \subsubsection{Data Preprocessing}\label{subsub:dataPreProp}
 
-  	Each image of the dataset is represented by a 32*32*3 array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is transformed into a 1*3072 array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype is changed from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
+  	Each image of the dataset is represented by a 32*32*3 array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is transformed into a 1*3072 array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype changes from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
   	
-  	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. The CIFAR-10 dataset consists of 60000 images, with 10000 specifically labeled for testing. For our performance analysis, we always use the provided test batch. The effect of varying training batch size can be seen below \textcolor{red}{here some plot of varying training size}
+  	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. There are 50000 images available for training. With the default splitting into training and validation dataset (80\% for training and 20\% for validation), Figure \ref{fig:dataPreprocessing} shows the effect of increasing the training batch size as well as employing data preprocessing.
   	
+  	\begin{figure}[h!]
+  		\centering
+   		\includegraphics{images/dataPreprocessing}
+   		\caption{Comparison of network performance with and without data preprocessing. The errorbars represent one standard deviation.}
+   		\label{fig:dataPreprocessing}
+   	\end{figure}
+   	
+   	As intuitively expected, the test accuracy increases for an increasing training batch size. However, the data preprocessing does not lead to a significant increase of performance. The normalization and mean subtraction do not have a big influence in that specific case since the input values already lie in a well defined range and the mean per pixel is also a almost constant value over all pixels. The errorbars show that the different accuracies are most likely due to the random weight initialization.
+   	
+\FloatBarrier
 \subsubsection{Data Augmentation}
 	    	
-   	Experience shows that a larger training data set increases network performance. A basic and still successful data augmentation method is vertical mirroring. \textcolor{red}{here some plot of varying training size with mirrored data} When comparing with above, the increase in performance can clearly be seen.
+   	Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size leads to an increased performance. A natural approach is therefore to artificially increase the training batch size. Image flipping and image rotation are used. Figure \ref{fig:dataAugmentation} illustrates the performance gain from vertical image mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
    	
    	\begin{figure}[h!]
 		\centering
    	  	\includegraphics{images/dataAugmentation}
-   	  	\caption{Hello Boy}
-   	  	\label{fig:test1}
+   	  	\caption{Comparison of network performance with and without data augmentation. The errorbars represent one standard deviation.}
+   	  	\label{fig:dataAugmentation}
    	\end{figure}
 \FloatBarrier
 
@@ -66,6 +78,14 @@ Data preprocessing and augmentation take place before the data is fed into the n
 c)on the training of the MLP    
 \begin{itemize}
    	\item Varying the number of neurons	
+   	
+	\begin{figure}[h!]
+   		 \centering	  		
+   		 \includegraphics{images/surfacelayers}
+   		 \caption{Hello Boy2}
+   		 \label{fig:surfaceLayers}
+    \end{figure}
+   	
 	\item Varying the number of layers
 	
 	  	\begin{figure}[h!]
@@ -93,3 +113,18 @@ d) on the performance of the MLP with different objective functions and optimiza
    
 \end{itemize}
 e)any other interesting observation that you think are pertinent (e.g. effect of learning rate on convergence speed).
+	  	\begin{figure}[h!]
+	  		\centering	  		
+	  		\includegraphics{images/activationFct}
+	  		\caption{Hello Boy2}
+	  		\label{fig:test2}
+	  	\end{figure}
+	  	
+	  	\begin{figure}[h!]
+	  		\centering	  		
+	  		\includegraphics{images/performFct}
+	  		\caption{Hello Boy2}
+	  		\label{fig:test2}
+	  	\end{figure}	  	
+
+
