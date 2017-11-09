@@ -3,12 +3,14 @@
 
 % define the training and test batch size.
 
-options.trainsize = 20000;       %value between 1 and 50000
+options.trainsize = 50000;       %value between 1 and 50000
 options.preprocessing = 'all'; %valid values are 'none' and 'all'
-options.augmentation = 'none';
+options.augmentation = 'mirror';
 options.trainFcn =  'trainscg';
-options.layers = [100 50];
+options.layers = [100 100];
 options.performFcn = 'crossentropy'; % many valid options
+options.activation = '1234';
+
 
 
 %First aquire all data. This should not be changed.
@@ -21,21 +23,16 @@ dataAquisition();
 % [net, sucessRateTraining] = networkTraining(50,cifarDataMirrored,cifarLabelsMirrored);
 % sucessRateTesting = networkTesting(net, cifarData(trainSize+1:testEnd,:), cifarLabels(trainSize+1:testEnd,:));
 
-performFcn = {'mae','mse','sae','sse','crossentropy','msesparse'};
-
 sucessRateTesting = zeros(6,5);
 trainTime = zeros(6,5);
-
-for i = 1:6
-  
-    options.performFcn = performFcn{i};
-    for k = 1 : 5
-        [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options);
-        tic
-        [net, sucessRateTraining] = networkTraining(Data_cpy,Labels_cpy,options);
-        sucessRateTesting(i,k) = networkTesting(net, test_cpy, cifarLabels(50001:60000,:));
-        trainTime(i,k) = toc;
-    end
+netStore = cell(5,1);
+for i = 1 : 5
+    %options.layers = [100 options.layers(2)+100 ];
+    [Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,options);
+    tic
+    [netStore{i,1}, sucessRateTraining] = networkTraining(Data_cpy,Labels_cpy,options);
+    sucessRateTesting(i) = networkTesting(netStore{i,1}, test_cpy, cifarLabels(50001:60000,:));
+    trainTime(i) = toc;
 end
 
 

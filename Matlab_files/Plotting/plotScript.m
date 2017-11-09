@@ -24,6 +24,17 @@
 % width = 15.99532; % this value is from latex dont change
 % height = width*0.61803398875; % we use the golden ratio for maximum aestetics
 % 
+<<<<<<< HEAD
+% figure;
+% 
+% plot(xAxis,100*avgSuccessRateTesting2,xAxis,100*avgSuccessRateTesting1);
+% 
+% % specify axis limits
+% xMin = 10;
+% xMax = xAxis(end);
+% yMin = 40;
+% yMax = 54;
+=======
 % figure('Units', 'Centimeters','position', [5, 5, width, height]);
 % 
 % 
@@ -37,12 +48,23 @@
 % yMin = 39;
 % yMax = 53;
 %
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
 % axis([xMin xMax yMin yMax]);
 % 
 % set(gca,'YTick',yMin:2:yMax,'XTick',xMin:5:xMax,'TickLabelInterpreter','latex');
 % ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
 % xlabel({'Training Batch Size \lbrack *1000\rbrack'},'interpreter','latex');
 % title({'Test Accuracy for Varying Training Batch Size'},'interpreter','latex');
+<<<<<<< HEAD
+% legend({'Data Augmentation','No Data Augmentation'},'interpreter','latex');
+% 
+% %this directly saves the .eps into the latex folder
+% print('-depsc2','../../Latex_files/images/dataAugmentation.eps');
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % figure with varying layers
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+=======
 % legend({'Preprocessing \& Image Mirroring','Only Preprocessing'},'interpreter','latex','location','southeast');
 % 
 % %this directly saves the .eps into the latex folder
@@ -51,6 +73,7 @@
 % % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % % figure with varying layers
 % % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
 % 
 % % load data. Average over the 5 runs. 20k test batches are used with 50
 % % nodes and a varying number of layers from 1 to 5.
@@ -66,6 +89,16 @@
 % width = 15.99532; % this value is from latex dont change
 % height = width*0.61803398875; % we use the golden ratio for maximum aestetics
 % 
+<<<<<<< HEAD
+% figure();
+% 
+% plot(xAxis2,100*avgSuccessRateTesting3);
+% 
+% % specify axis limits
+% xMin = 1;
+% xMax = xAxis2(end);
+% yMin = 40;
+=======
 % figure('Units', 'Centimeters','position', [5, 5, width, height]);
 % 
 % errorbar(xAxis2,100*avgSuccessRateTesting3,100*stdSuccessRateTesting3);
@@ -74,6 +107,7 @@
 % xMin = 0;
 % xMax = xAxis2(end)+1;
 % yMin = 38;
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
 % yMax = 46;
 % axis([xMin xMax yMin yMax])
 % 
@@ -81,11 +115,19 @@
 % ylabel({'Test Accuracy \lbrack\%\rbrack'},'interpreter','latex');
 % xlabel({'Number of Layers \lbrack-\rbrack'},'interpreter','latex');
 % title({'Test Accuracy for Varying Number of Layers'},'interpreter','latex');
+<<<<<<< HEAD
+% legend({'20k test batch size, no data augmentation'},'interpreter','latex');
+=======
 % legend({'MLP Classifier with Default Settings'},'interpreter','latex','location','southeast');
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
 % 
 % %this directly saves the .eps into the latex folder
 % print('-depsc2','../../Latex_files/images/numberLayers.eps');
 % 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Learning rate figure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -129,6 +171,8 @@
 % %this directly saves the .eps into the latex folder
 % print('-depsc2','../../Latex_files/images/learningRate.eps');
 
+<<<<<<< HEAD
+=======
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %figure with a fancy surface
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -329,3 +373,4 @@ print('-depsc2','../../Latex_files/images/performFct.eps');
 
 
 
+>>>>>>> 6c2c98eee39c3e577e6f855ec902ea5019a68dbc
