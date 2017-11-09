@@ -13,45 +13,45 @@ Warning--empty journal in krizhevsky2009learning
 Warning--empty journal in ranzingercomposition
 Warning--empty year in ranzingercomposition
 Warning--empty year in ranzingercomposition
-You've used 28 entries,
+You've used 29 entries,
             2481 wiz_defined-function locations,
-            707 strings with 9852 characters,
-and the built_in function-call counts, 11940 in all, are:
-= -- 933
-> -- 774
-< -- 15
-+ -- 288
-- -- 232
-* -- 950
-:= -- 1927
-add.period$ -- 86
-call.type$ -- 28
-change.case$ -- 56
-chr.to.int$ -- 28
-cite$ -- 32
-duplicate$ -- 593
-empty$ -- 1021
-format.name$ -- 270
-if$ -- 2521
+            712 strings with 10060 characters,
+and the built_in function-call counts, 12532 in all, are:
+= -- 986
+> -- 801
+< -- 16
++ -- 298
+- -- 240
+* -- 991
+:= -- 2007
+add.period$ -- 89
+call.type$ -- 29
+change.case$ -- 58
+chr.to.int$ -- 29
+cite$ -- 33
+duplicate$ -- 626
+empty$ -- 1075
+format.name$ -- 279
+if$ -- 2658
 int.to.chr$ -- 1
-int.to.str$ -- 29
-missing$ -- 27
-newline$ -- 147
-num.names$ -- 84
-pop$ -- 265
+int.to.str$ -- 30
+missing$ -- 28
+newline$ -- 152
+num.names$ -- 87
+pop$ -- 277
 preamble$ -- 1
-purify$ -- 28
+purify$ -- 29
 quote$ -- 0
-skip$ -- 367
+skip$ -- 393
 stack$ -- 0
-substring$ -- 460
-swap$ -- 120
-text.length$ -- 7
+substring$ -- 502
+swap$ -- 134
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 196
+type$ -- 203
 warning$ -- 4
-while$ -- 92
+while$ -- 97
 width$ -- 0
-write$ -- 358
+write$ -- 371
 (There was 1 error message)

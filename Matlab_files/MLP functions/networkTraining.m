@@ -6,7 +6,6 @@ trainFcn = options.trainFcn;
 origSize = options.trainsize;
 totalSize = size(target,2);
 
-
 RandIndx = randperm(origSize);
 data(1:origSize,:)= data(RandIndx,:);
 target(1:origSize,:) = target(RandIndx,:);
@@ -18,7 +17,6 @@ target = target';
 hiddenLayerSize = options.layers;
 net = patternnet(hiddenLayerSize, trainFcn);
 
-
 % Setup Division of Data for Training, Validation, Testing. No need for
 % test data since we test the model separately after training.
 net.divideFcn = 'divideblock';
@@ -27,11 +25,7 @@ net.divideParam.valRatio = 20/100;
 net.divideParam.testRatio = 0/100;
 
 % Performance function
-net.performFcn = 'crossentropy';
-
-% Learning rate.
-net.layerWeights{2,1}.LearnParam.lr = options.learningRate;
-net.layerWeights{3,2}.LearnParam.lr = options.learningRate;
+net.performFcn = options.performFcn;
 
 % Train the Network
 

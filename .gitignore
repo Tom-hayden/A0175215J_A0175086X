@@ -4,3 +4,11 @@
 *.gz
 *.toc
 /cifar-10-batches-mat
+*.pdf
+*.blg
+*.bbl
+*.bbl
+Latex_files/Report.pdf
+*.blg
+*.pdf
+*.asv

@@ -21,6 +21,8 @@
 \usepackage{lipsum}
 \usepackage{layouts}
 
+\usepackage{placeins} % for FloatBarrier
+
 \usepackage{fancyhdr}
 \setlength{\headheight}{13pt}
 \fancypagestyle{tom}{
@@ -39,14 +41,14 @@
 }
 
 \usepackage[binary-units]{siunitx}
-\sisetup{%
-  mode = math,
-  detect-all,
-  exponent-product = \cdot,
-  number-unit-separator=\text{\,},
-  math-rm=\mathsf,
-  text-rm=\sffamily,
-}
+%\sisetup{%
+  %mode = math,
+  %detect-all,
+  %exponent-product = \cdot,
+  %number-unit-separator=\text{\,},
+  %math-rm=\mathsf,
+  %text-rm=\sffamily,
+%}
 
 % \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -90,7 +92,7 @@
 \input{chapters/MLPClassifier}
 \input{chapters/CNNNetwork}
 \input{chapters/Conclusion}
-
+\clearpage
 \bibliographystyle{unsrtnat}
 \bibliography{bibliography}
 
