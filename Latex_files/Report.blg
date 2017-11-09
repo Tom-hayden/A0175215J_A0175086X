@@ -10,45 +10,48 @@ Repeated entry---line 138 of file bibliography.bib
  :                            ,
 I'm skipping whatever remains of this entry
 Warning--empty journal in krizhevsky2009learning
-You've used 24 entries,
+Warning--empty journal in ranzingercomposition
+Warning--empty year in ranzingercomposition
+Warning--empty year in ranzingercomposition
+You've used 26 entries,
             2481 wiz_defined-function locations,
-            687 strings with 9181 characters,
-and the built_in function-call counts, 10132 in all, are:
-= -- 767
-> -- 702
-< -- 10
-+ -- 260
-- -- 212
-* -- 822
-:= -- 1673
-add.period$ -- 74
-call.type$ -- 24
-change.case$ -- 48
-chr.to.int$ -- 24
-cite$ -- 25
-duplicate$ -- 492
-empty$ -- 850
-format.name$ -- 242
-if$ -- 2113
+            695 strings with 9508 characters,
+and the built_in function-call counts, 10977 in all, are:
+= -- 836
+> -- 744
+< -- 11
++ -- 276
+- -- 224
+* -- 884
+:= -- 1796
+add.period$ -- 79
+call.type$ -- 26
+change.case$ -- 52
+chr.to.int$ -- 26
+cite$ -- 30
+duplicate$ -- 541
+empty$ -- 929
+format.name$ -- 256
+if$ -- 2299
 int.to.chr$ -- 1
-int.to.str$ -- 25
-missing$ -- 23
-newline$ -- 128
-num.names$ -- 72
-pop$ -- 221
+int.to.str$ -- 27
+missing$ -- 25
+newline$ -- 137
+num.names$ -- 78
+pop$ -- 247
 preamble$ -- 1
-purify$ -- 24
+purify$ -- 26
 quote$ -- 0
-skip$ -- 297
+skip$ -- 328
 stack$ -- 0
-substring$ -- 355
-swap$ -- 90
-text.length$ -- 4
+substring$ -- 391
+swap$ -- 103
+text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 168
-warning$ -- 1
-while$ -- 76
+type$ -- 182
+warning$ -- 4
+while$ -- 83
 width$ -- 0
-write$ -- 308
+write$ -- 330
 (There was 1 error message)
