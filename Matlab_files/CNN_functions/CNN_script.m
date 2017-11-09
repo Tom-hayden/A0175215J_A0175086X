@@ -1,31 +1,34 @@
 % This file implements a CNN classifier.
 % Tom Hayden, Mario Gini
 
-%Define the training and test batch size.
+%Add cifar to path.
 
-dataProcessOptions.trainsize = 50000;       %value between 1 and 50000
-dataProcessOptions.preprocessing = 'none'; %valid values are 'none' and 'all'
-dataProcessOptions.augmentation = 'mirror';  %valid values are 'none', 'mirror' and 'all'
-
-
-%First aquire all data. This should not be changed.
-dataAquisition();
-
-%Preprocess and augment
-[Data_cpy, Labels_cpy, test_cpy] = dataPreProcAndAug(cifarData,cifarLabels,dataProcessOptions);
-
-% Reshape the data into the formar required for a CNN
-[Data_CNN, Labels_CNN] = dataReshapeCNN(Data_cpy, Labels_cpy);
-
+addpath(genpath('../cifar-10-batches-mat'));
 
 %first load the cifar-10 data set and split into validate and train data
 %sets.
 
+Nbatches = 5;
+
+%Preallocating Validate and train.
+img_data = uint8(zeros(32,32,3,10000*Nbatches));
+img_labels = uint8(zeros(10000*Nbatches,1));
+
+for i = 1:Nbatches
+    load(strcat('data_batch_',num2str(i)))
+    for j = 1 : 10000
+        img_data(:,:,:,(i-1)*10000 +j) = rot90(reshape(data(j,:),[32,32,3]),3);
+    end
+   img_labels((i-1)*10000+1:i*10000) = labels;
+end
+
+%Now create catagorical vector of labels.
+keySet = [0 1 2 3 4 5 6 7 8 9];
+valueSet = {'airplane','automobile','bird','cat','deer','dog','frog','horse','ship','truck'};
+img_labels = categorical(img_labels,keySet,valueSet);
 
 %Now train data contains the batch data with the data label added as an
-%extra columnn
-% 
-% 
+%extra colum 
 %Layers taken from https://www.mathworks.com/help/nnet/examples/create-simple-deep-learning-network-for-classification.html
 layers = [
     imageInputLayer([32,32,3])
@@ -53,9 +56,7 @@ trainOptions = trainingOptions('sgdm',...
     'LearnRateDropFactor',0.2,...
     'LearnRateDropPeriod',5,...
     'MaxEpochs',50,...
-    'MiniBatchSize',64,...
+    'MiniBatchSize',128,...
     'VerboseFrequency',20);
 
-convnet = trainNetwork(Data_CNN,Labels_CNN,layers,trainOptions);
-
-
+convnet = trainNetwork(img_data,img_labels,layers,trainOptions);

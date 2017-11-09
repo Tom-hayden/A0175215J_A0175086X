@@ -2,7 +2,7 @@
 	    \pagestyle{mario}
 	    \sectionauthor{M. Gini \& T. M. Hayden} %\printinunitsof{cm}\prntlen{\linewidth} this shows linewidth in cm
 
-This section presents the multi-layer perceptron (MLP) classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters.
+This section presents the MLP classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters.
 
 \subsection{Software Setup}\label{subsec:setup}
 
@@ -30,11 +30,11 @@ The other hidden layers consist of standard MLP. The input to the MLP are the pi
 MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
 
 \begin{itemize}
-	\item Training function: 'trainscg' which is the scaled conjugate gradient method.
+	\item Training function: 'trainscg', the scaled conjugate gradient method.
 
-	\item Loss function: 'crossentropy' which penalizes
+	\item Loss function: 'crossentropy'
 
-	\item Activation function: 'tansig' which is the hyperbolic tangent sigmoid activation function
+	\item Activation function: 'tansig'
 
 	\item The training batch size is set to 20000 images. This constitutes a compromise between a good performance and a reasonable training time.
 
