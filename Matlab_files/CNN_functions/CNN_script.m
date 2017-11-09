@@ -3,7 +3,7 @@
 
 %Define the training and test batch size.
 
-dataProcessOptions.trainsize = 50000;       %value between 1 and 50000
+dataProcessOptions.trainsize = 10000;       %value between 1 and 50000
 dataProcessOptions.preprocessing = 'none'; %valid values are 'none' and 'all'
 dataProcessOptions.augmentation = 'mirror';  %valid values are 'none', 'mirror' and 'all'
 

@@ -93,10 +93,11 @@ There can be an arbitrarily large number of hidden layers. However performance g
     \label{fig:layers}
  \end{figure}
 
+\subsubsection{Number of neurons per layer in the MLP}
 
-c)on the training of the MLP
-\begin{itemize}
-   	\item Varying the number of neurons
+Choosing the optimum number of neurons per layer is a challenging task when designing any MLP architecture. Even in modern archetectures, the number of neurons is generally first estimated using empirical rules and then optimised for the particular dataset\cite{lawrence1998size}. This is especially the case when using noisy datasets such as CIFAR-10.
+
+Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons per layer on a MLP with two hidden layers. The results show that the number of neurons in the first layer have very little effect on the test accuracy. In addition the results also show that increasing the number of neurons beyond around 70 had very little to no effect. Increasing the number of neurons also increased the time to train. The of neurons in the second layer also had a much stronger impact on the time taken to train than the number of neurons in the first layer. 
 
 	\begin{figure}[h!]
    		 \centering
@@ -104,16 +105,6 @@ c)on the training of the MLP
    		 \caption{Hello Boy2}
    		 \label{fig:surfaceLayers}
     \end{figure}
-
-	\item Varying the number of layers
-
-	  	\begin{figure}[h!]
-	  		\centering
-	  		\includegraphics{images/numberlayers}
-	  		\caption{Hello Boy2}
-	  		\label{fig:test2}
-	  	\end{figure}
-\end{itemize}
 
 \FloatBarrier
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
