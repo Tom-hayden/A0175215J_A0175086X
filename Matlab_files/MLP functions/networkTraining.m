@@ -6,7 +6,6 @@ trainFcn = options.trainFcn;
 origSize = options.trainsize;
 totalSize = size(target,2);
 
-
 RandIndx = randperm(origSize);
 data(1:origSize,:)= data(RandIndx,:);
 target(1:origSize,:) = target(RandIndx,:);
@@ -17,6 +16,11 @@ target = target';
 % Create a Pattern Recognition Network
 hiddenLayerSize = options.layers;
 net = patternnet(hiddenLayerSize, trainFcn);
+
+% Change the type of activation function
+
+net.layers{1}.transferFcn = options.transferFcn;
+net.layers{2}.transferFcn = options.transferFcn;
 
 
 % Setup Division of Data for Training, Validation, Testing. No need for
