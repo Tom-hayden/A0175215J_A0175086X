@@ -4,3 +4,6 @@
 *.gz
 *.toc
 /cifar-10-batches-mat
+*.pdf
+*.blg
+*.bbl

@@ -33,6 +33,10 @@ net.divideParam.testRatio = 0/100;
 % Performance function
 net.performFcn = 'crossentropy';
 
+% Learning rate.
+net.layerWeights{2,1}.LearnParam.lr = options.learningRate;
+net.layerWeights{3,2}.LearnParam.lr = options.learningRate;
+
 % Train the Network
 
 [net,tr] = train(net,data,target);
