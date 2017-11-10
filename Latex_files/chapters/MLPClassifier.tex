@@ -2,7 +2,7 @@
 	    \pagestyle{mario}
 	    \sectionauthor{M. Gini \& T. M. Hayden} %\printinunitsof{cm}\prntlen{\linewidth} this shows linewidth in cm
 
-This section presents the MLP classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters.
+This section presents the MLP classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters. Finally, Section \ref{sec:optClassifier} presents the optimized MLP classifier.
 
 \subsection{Software Setup}\label{subsec:setup}
 
@@ -10,13 +10,11 @@ MATLAB's Neural Networks toolbox is employed to implement the MLP classifier. Th
 
 Since this is a classification problem, parts of the network structure are given. The output of the MLP should be a prediction of to which class the input belongs to. This is accomplished with the help of the softmax function, also called normalized exponential function. Equation \ref{eq:softmax} shows the formula of such a function. A softmax layer is then used as the last layer. It gets a $K$-dimensional input vector $\boldsymbol{z}$ of arbitrary real values and "squashes" it into a $K$-dimensional output vector $\sigma(\boldsymbol{z})$ of real values in the range $[0,1]$. In our case, $K=10$ and the output values represent the probabilities that the input belongs to the respective class. The class with the highest probability then constitutes the predicition of the MLP.
 
-Every ANN will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data vector. In the case of CIFAR-10 the input size is $1*3072$, the number of pixels per image.
-
-In addition to the input layer, each network will also have an output layer. The size of the output layer is also defined by the format of the data. In the the case of CIFAR-10, the output layer is a softmax layer with 10 nodes corresponding to each class label.
-
 \begin{equation}\label{eq:softmax}
 \sigma(\boldsymbol{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}\quad \textrm{for}\quad j = 1,...~K.
 \end{equation}
+
+Every ANN will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data vector. In the case of the CIFAR-10 dataset, the input size is $1*3072$, the number of pixels per image. Since the dataset is to be classified into 10 categories, the output layer is a softmax layer with 10 nodes.
 
 \begin{figure}[h!]
   	\centering
@@ -25,9 +23,7 @@ In addition to the input layer, each network will also have an output layer. The
   	\label{fig:NNtool}
 \end{figure}
 
-The other hidden layers consist of standard MLP. The input to the MLP are the pixel values of the image. Preprocessing and augmentation as described in the next section is also done before the pixel values are fed into the network.
-
-MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
+The other hidden layers consist of standard MLP. The input to the MLP are the pixel values of the image. Preprocessing and augmentation as described in the next section is done before the pixel values are fed into the network. MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwise, the following settings are employed as default settings:
 
 \begin{itemize}
 	\item Training function: 'trainscg', the scaled conjugate gradient method.
@@ -35,14 +31,14 @@ MATLAB offers lots of adjustable settings for the MLP. Unless mentioned otherwis
 	\item Loss function: 'crossentropy'
 
 	\item Activation function: 'tansig'
-
-	\item The training batch size is set to 20000 images. This constitutes a compromise between a good performance and a reasonable training time.
-
+	
 	\item As a default network structure, two hidden layers are employed with 100 and 50 neurons.
 
-	\item Dataset structure: 80\% are used for the training and 20\% are used for validation. For the testing, the dedicated testing batch provided in the dataset is utilized.
+	\item Weight initialization: The weights of the neurons are randomly initialized. Since this leads to slightly different performance for each run, for the performance analysis each configuration is run five times and then the test accuracy is averaged. The standard deviation of the different runs is then plotted as well.
+	
+	\item The training batch size is set to 20000 images. This constitutes a compromise between a good performance and a reasonable training time. 80\% are used for training and 20\% are used for validation.
 
-	\item Weight initialization: The weights of the neurons are randmoly initialized. Since this leads to slightly different performances for each run, for the performance analysis each configuration is run five times and then the test accuracy is averaged.
+	\item The testing batch consisting of 10000 images is employed for testing of the MLP.
 \end{itemize}
 
 \FloatBarrier
@@ -54,18 +50,17 @@ Data preprocessing and augmentation take place before the data is fed into the n
 
   	Each image of the dataset is represented by a 32*32*3 array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is transformed into a 1*3072 array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype changes from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
 
-  	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. There are 50000 images available for training. With the default splitting into training and validation dataset (80\% for training and 20\% for validation), Figure \ref{fig:dataPreprocessing} shows the effect of increasing the training batch size as well as employing data preprocessing.
+  	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. There are 50000 images available for training. With the default splitting into training and validation dataset (80\% for training and 20\% for validation), Figure \ref{fig:dataPreprocessing} shows the effect of varying the training batch size as well as employing data preprocessing.
 
-  	\begin{figure}[h!]
+  	\begin{figure}
   		\centering
    		\includegraphics{images/dataPreprocessing}
-   		\caption{Comparison of network performance with and without data preprocessing. The errorbars represent one standard deviation.}
+   		\caption{Comparison of network performance with and without data preprocessing. The errorbars represent one standard deviation. The default MLP classifier is used.}
    		\label{fig:dataPreprocessing}
    	\end{figure}
 
-   	As intuitively expected, the test accuracy increases for an increasing training batch size. However, the data preprocessing does not lead to a significant increase of performance. The normalization and mean subtraction do not have a big influence in that specific case since the input values already lie in a well defined range and the mean per pixel is also a almost constant value over all pixels. The errorbars show that the different accuracies are most likely due to the random weight initialization.
+   	As intuitively expected, the test accuracy increases for an increasing training batch size. However, the data preprocessing does not lead to a significant increase of performance. The normalization and mean subtraction do not have a big influence in the specific case of the CIFAR-10 dataset since the input values already lie in a well defined range and the mean per pixel is also a almost constant value over all pixels.
 
-\FloatBarrier
 \subsubsection{Data Augmentation}
 
 Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size leads to an increased performance. A natural approach is therefore to artificially increase the training batch size. Image flipping and image rotation are implemented. Figure \ref{fig:dataAugmentation} illustrates the performance gain from vertical image mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
@@ -77,17 +72,14 @@ Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size
    	  	\label{fig:dataAugmentation}
    	\end{figure}
 
-Figure \ref{fig:dataAugDemo} illustrates the data augmentation process on a cat image. The image is mirrored and rotated three times by 90 degrees. This results in a 8-fold increase of the training data size.
+Figure \ref{fig:dataAugDemo} illustrates the data augmentation process on a cat image. The image is mirrored and rotated three times by 90 degrees. This results in a 8-fold increase of the training batch size.
 
    	\begin{figure}[h!]
    		\centering
    		\includegraphics{images/DataAugDemo.png}
-   		\caption{Illustration of the data augmentation process on a cat image.}
+   		\caption{Illustration of the data augmentation process on a cat image. Image mirroring and rotation is employed.}
    		\label{fig:dataAugDemo}
    	\end{figure}
-
-
-\FloatBarrier
 
 \subsection{Optimization of Network Structure}\label{subsec:netStruct}
 
@@ -104,11 +96,11 @@ In general, a MLP can have an arbitrarily large number of hidden layers. However
     \label{fig:layers}
  \end{figure}
 
-\subsubsection{Number of neurons per layer in the MLP}
+\subsubsection{Number of Neurons}
 
 Choosing the optimum number of neurons per layer is a challenging task when designing any MLP architecture. Even in modern archetectures, the number of neurons is generally first estimated using empirical rules and then optimised for the particular dataset\cite{lawrence1998size}. This is especially the case when using noisy datasets such as CIFAR-10.
 
-Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons per layer on a MLP with two hidden layers. The results show that the number of neurons in the first layer have very little effect on the test accuracy. In addition the results also show that increasing the number of neurons beyond around 70 had very little to no effect. Increasing the number of neurons also increased the time to train. The of neurons in the second layer also had a much stronger impact on the time taken to train than the number of neurons in the first layer.
+Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons in the case of two hidden layers. The results show that the number of neurons in the first layer have very little effect on the test accuracy. In addition, the results also show that increasing the number of neurons beyond around 70 had very little to no effect. Increasing the number of neurons also increased the time to train. The number of neurons in the second layer also has a much stronger impact on the time taken to train than the number of neurons in the first layer.
 
 	\begin{figure}[h!]
    		 \centering
@@ -116,8 +108,6 @@ Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons
    		 \caption{Hello Boy2}
    		 \label{fig:surfaceLayers}
     \end{figure}
-
-\FloatBarrier
 
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
 
@@ -185,7 +175,7 @@ Hyperparameter selection for ANN such as MLP has become an active field of resea
 
  An advantage of conjugate gradient backpropagation algorithms is that they do not require a learning rate parameter. Since our investigations show that they are superior over other backpropagation methods, no further analysis on finding optimal learning rates is conducted.
 
-\subsection{Optimized Classifier}
+\subsection{Optimized Classifier}\label{sec:optClassifier}
 
 \begin{figure}[h!]
    \centering
