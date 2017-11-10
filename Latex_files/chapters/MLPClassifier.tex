@@ -188,7 +188,7 @@ We now attempt to use the information we have gathered to create our final MLP c
     \item The saturating linear activation function is used as this gives the highest performance.
 \end{itemize}
 
-Using these results we managed to get a result of $52.61\%$. The confusion matrix is shown in figure \ref{fig:Conf_Matrix}. Table \ref{Tab:Classes} shows how the labels used in the training model correspond to real classes. Note that the highest error exhibited in the confusion matrix is between cats and dogs. This is not surprising as the general form of cats and dogs are quite similar and the poses of both vary considerably throughout the data set.
+Using these results we managed to get a test accuracy of $52.61\%$. The confusion matrix is shown in figure \ref{fig:Conf_Matrix}. Table \ref{Tab:Classes} shows how the labels used in the training model correspond to real classes. Note that the highest error exhibited in the confusion matrix is between cats and dogs. This is not surprising as the general form of cats and dogs are quite similar and the poses of both vary considerably throughout the dataset.
 
 The MLP was most effective at classifying the ship class. This is because the ship class generally has many distinctive features such as a blue background. In contrast, the dog class performed the worst. The dogs can appear with a variety of colours, poses, backgrounds and prominence. This makes it a challenging class to classify.
 
@@ -199,14 +199,14 @@ The MLP took 35 minutes to train and is capable of classifying the entire test s
    \includegraphics[width=\textwidth]{images/Confusion_Matrix}
    \caption{Confusion Matrix for the final MLP classifier }
    \label{fig:Conf_Matrix}
-<<<<<<< HEAD
+
 \end{figure}
 
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{||c | c||}
  \hline
- Label & Class \\ [0.5ex]
+ \textbf{Label} & \textbf{Class} \\ [0.5ex]
  \hline
  1& Airplane\\
  2& Automobile \\
@@ -221,10 +221,8 @@ The MLP took 35 minutes to train and is capable of classifying the entire test s
  \hline
 
 \end{tabular}
-\caption{The different classes in the CIFAR-10 dataset}
+\caption{The different classes in the CIFAR-10 dataset.}
 \label{Tab:Classes}
 \end{center}
 \end{table}
-=======
-\end{figure}
->>>>>>> b4d7d4c7818064786a2d83412e1f567537a54296
+\FloatBarrier
