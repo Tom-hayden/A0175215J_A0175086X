@@ -2,7 +2,7 @@
 	    \pagestyle{mario}
 	    \sectionauthor{M. Gini \& T. M. Hayden} %\printinunitsof{cm}\prntlen{\linewidth} this shows linewidth in cm
 
-This section presents the MLP classifier designed to classify the CIFAR-10 dataset. It is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters. Finally, Section \ref{sec:optClassifier} presents the optimized MLP classifier.
+This section presents an MLP classifier designed to classify the CIFAR-10 dataset. The section is organized as follows: Section \ref{subsec:setup} introduces the software setup used to implement the MLP classifier. Section \ref{subsec:preProp} discusses the data preprocessing and augmentation. Section \ref{subsec:netStruct} analyzes the effect of different network structures on performance. Section \ref{subsec:optNet} analyzes the effect of different hyperparameters. Finally, Section \ref{sec:optClassifier} presents the optimized MLP classifier.
 
 \subsection{Software Setup}\label{subsec:setup}
 
@@ -14,7 +14,7 @@ Since this is a classification problem, parts of the network structure are given
 \sigma(\boldsymbol{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}\quad \textrm{for}\quad j = 1,...~K.
 \end{equation}
 
-Every ANN will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data vector. In the case of the CIFAR-10 dataset, the input size is $1*3072$, the number of pixels per image. Since the dataset is to be classified into 10 categories, the output layer is a softmax layer with 10 nodes.
+Every ANN will have at the very least one input layer and one output layer. The size of the input layer simply depends on the size of the input data vector. In the case of the CIFAR-10 dataset, the input size is $1\times3072$, the number of pixels per image. Since the dataset is to be classified into 10 categories, the output layer is a softmax layer with 10 nodes.
 
 \begin{figure}[h!]
   	\centering
@@ -31,11 +31,11 @@ The other hidden layers consist of standard MLP. The input to the MLP are the pi
 	\item Loss function: 'crossentropy'
 
 	\item Activation function: 'tansig'
-	
-	\item As a default network structure, two hidden layers are employed with 100 and 50 neurons.
 
-	\item Weight initialization: The weights of the neurons are randomly initialized. Since this leads to slightly different performance for each run, for the performance analysis each configuration is run five times and then the test accuracy is averaged. The standard deviation of the different runs is then plotted as well.
-	
+	\item As a default network structure, two hidden layers are employed with 100 and 50 neurons in the first and second layers respectively.
+
+	\item Weight initialization: The weights of the neurons are randomly initialized. Since this leads to slightly different performance for each run, the performance analysis for each configuration is run five times and then the test accuracy is averaged. The standard deviation of the different runs is then plotted as well.
+
 	\item The training batch size is set to 20000 images. This constitutes a compromise between a good performance and a reasonable training time. 80\% are used for training and 20\% are used for validation.
 
 	\item The testing batch consisting of 10000 images is employed for testing of the MLP.
@@ -48,7 +48,7 @@ Data preprocessing and augmentation take place before the data is fed into the n
 
 \subsubsection{Data Preprocessing}\label{subsub:dataPreProp}
 
-  	Each image of the dataset is represented by a 32*32*3 array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is transformed into a 1*3072 array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype changes from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
+  	Each image of the dataset is represented by a $32\times32\times3$ array, which results in 1024 pixel values per color channel. To be processed by the MLP, it is first transformed into a $1\times3072$ array. The pixel values are integers in the range [0,255]. For normalization, the data is divided by 255 to lie within the range [0,1]. Accordingly, the datatype changes from the integer type to double. In a second step, the mean per pixel over the whole training set is subtracted. This centers the data per channel.
 
   	Data preprocessing also includes the division of the complete dataset into appropriate training, validation and test data batches. There are 50000 images available for training. With the default splitting into training and validation dataset (80\% for training and 20\% for validation), Figure \ref{fig:dataPreprocessing} shows the effect of varying the training batch size as well as employing data preprocessing.
 
@@ -63,7 +63,7 @@ Data preprocessing and augmentation take place before the data is fed into the n
 
 \subsubsection{Data Augmentation}
 
-Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size leads to an increased performance. A natural approach is therefore to artificially increase the training batch size. Image flipping and image rotation are implemented. Figure \ref{fig:dataAugmentation} illustrates the performance gain from vertical image mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
+Figure \ref{fig:dataPreprocessing} shows that a larger training batch size leads to an increased performance. A natural approach to increase classification accuracy is therefore to increase the training batch size. This can be done artificially by implementing data augmentation. We do this by implementing image flipping and image rotation. Figure \ref{fig:dataAugmentation} illustrates the performance gain by using horizontal mirroring. The test accuracy is significantly increased for all training batch sizes by around \SI{3}{\percent}.
 
    	\begin{figure}[h!]
 		\centering
@@ -72,7 +72,7 @@ Figure \ref{fig:dataPreprocessing} above shows that a larger training batch size
    	  	\label{fig:dataAugmentation}
    	\end{figure}
 
-Figure \ref{fig:dataAugDemo} illustrates the data augmentation process on a cat image. The image is mirrored and rotated three times by 90 degrees. This results in a 8-fold increase of the training batch size.
+Figure \ref{fig:dataAugDemo} illustrates the data augmentation process on a typical image. The image is mirrored and rotated three times by 90 degrees. This results in a 8-fold increase of the training batch size.
 
    	\begin{figure}[h!]
    		\centering
@@ -87,7 +87,7 @@ Choosing the correct architecture of a neural network remains an area of study w
 
 \subsubsection{Number of Hidden Layers}
 
-In general, a MLP can have an arbitrarily large number of hidden layers. However, MLP architectures with a large number of hidden layers are not common. Additionally, adding more layers increases the chance that the classifier finds a local minimum\cite{de1993backpropagation}. Figure \ref{fig:layers} shows the effect of varying the number of hidden layers of the default MLP classifier. Note that the test accuracy remains almost constant for more than two hidden layers.
+In general, a MLP can have an arbitrarily large number of hidden layers. However, MLP architectures with a large number of hidden layers are not common. This is because adding more layers increases the chance that the classifier finds a local minimum\cite{de1993backpropagation}. Additional hidden layers rarely result in improved performance. Figure \ref{fig:layers} shows the effect of varying the number of hidden layers of our default MLP classifier. Note that as expected, the test accuracy remains almost constant for more than two hidden layers.
 
 \begin{figure}[h!]
     \centering
@@ -100,18 +100,18 @@ In general, a MLP can have an arbitrarily large number of hidden layers. However
 
 Choosing the optimum number of neurons per layer is a challenging task when designing any MLP architecture. Even in modern archetectures, the number of neurons is generally first estimated using empirical rules and then optimised for the particular dataset\cite{lawrence1998size}. This is especially the case when using noisy datasets such as CIFAR-10.
 
-Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons in the case of two hidden layers. The results show that the number of neurons in the first layer have very little effect on the test accuracy. In addition, the results also show that increasing the number of neurons beyond around 70 had very little to no effect. Increasing the number of neurons also increased the time to train. The number of neurons in the second layer also has a much stronger impact on the time taken to train than the number of neurons in the first layer.
+Figure \ref{fig:surfaceLayers} shows the result of varying the number of neurons using two hidden layers with our default MLP. The results show that the number of neurons in the first layer have very little effect on the test accuracy. In addition, the results also show that increasing the number of neurons beyond around 70 had very little to no effect. Increasing the number of neurons also increased the time to train. The number of neurons in the second layer also has a much stronger impact on the time taken to train than the number of neurons in the first layer.
 
 	\begin{figure}[h!]
    		 \centering
    		 \includegraphics{images/surfacelayers}
-   		 \caption{Hello Boy2}
+   		 \caption{Surface plot showing the effect of varying the number of neurons in the hidden layers of the MLP}
    		 \label{fig:surfaceLayers}
     \end{figure}
 
 \subsection{Optimization of Network Hyperparameters}\label{subsec:optNet}
 
-Hyperparameter selection for ANN such as MLP has become an active field of research with various algorithms being used to estimate optimal parameters\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due limited computational resources. Instead, a few parameter are varied while using the default MLP structure. Optimal parameters are then estimated from these trends.
+Hyperparameter selection for ANN such as MLP has become an active field of research with various algorithms being used to estimate optimal parameters\cite{bergstra2011algorithms}. However, since these algorithms rely on performing many trials and updating the parameters accordingly, they proved unsuitable for our purposes due limited computational resources. Instead, a few parameter are varied whilst using the default MLP structure. Optimal parameters are then estimated from the observed trends.
 %\subsubsection{Learning Rate}
 %
 %Choosing the learning rate for a MLP classifier can be a challenging process. There is no approach that will work optimally for every dataset. A learning rate that is too high can overshoot the solution and become unstable. However low learning rates can become stuck in local minima or take a long time to train. A good solution is to pick a high learning rate that can pass over local minima and  to gradually decrease the learning rate so that the classifier does not become unstable. This will result in a classifier which initially follows general trends and 'explores' a large portion of the parameter space. Later on the smaller learning rate will allow for the model to be fine tuned into a particular solution.
@@ -128,7 +128,7 @@ Hyperparameter selection for ANN such as MLP has become an active field of resea
 
  \subsubsection{Performance Function}
 
- The performance function is used to measure the error that a specific input produces in the network. The error expression is then used in the training algorithm which usually is a variation of the backpropagation method\cite{hecht1988theory}. MATLAB offers the following different performance functions:
+ The performance function is used to measure the error that a specific input produces in the network. The error expression is then used in the training algorithm to update the weights of the model\cite{hecht1988theory}. MATLAB offers the following different performance functions:
 
  \begin{itemize}
  	\item SAE, the sum absolute error function
@@ -138,7 +138,7 @@ Hyperparameter selection for ANN such as MLP has become an active field of resea
  	\item Cross-entropy error function
  \end{itemize}
 
- As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Cross-entropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the cross-entropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks.
+ Figure \ref{fig:performFct} shows that three performance functions result in a similar performance: MSE, SSE and Cross-entropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the cross-entropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks.
 
  \begin{figure}[h!]
  	\centering
@@ -188,18 +188,21 @@ We now attempt to use the information we have gathered to create our final MLP c
     \item The saturating linear activation function is used as this gives the highest performance.
 \end{itemize}
 
-Using these results we managed to get a result of $52.61\%$. The confusion matrix is shown in figure \ref{fig:Conf_Matrix}. Table \ref{Tab:Classes} shows how the labels used in the training model correspond to real classes. Note that the highest error exhibited in the confusion matrix is between cats and dogs. This is not surprising as the general form of cats and dogs are quite similar and the poses of both vary considerably throughout the data set.
+Using these results we managed to get a result of $52.61\%$. The confusion matrix is shown in figure \ref{fig:Conf_Matrix}. Table \ref{Tab:Classes} shows how the labels used in the model correspond to real class categories. Note that the highest misclassification exhibited in the confusion matrix is between cats and dogs. This is not surprising as the general form of cats and dogs are quite similar and the poses of both vary considerably throughout the data set.
 
-The MLP was most effective at classifying the ship class. This is because the ship class generally has many distinctive features such as a blue background. In contrast, the dog class performed the worst. The dogs can appear with a variety of colours, poses, backgrounds and prominence. This makes it a challenging class to classify.
+The MLP was most effective at classifying the ship class. This is because the ship class generally has many distinctive features such as a blue background. In contrast, the dog class performed the worst. The dogs can appear with a variety of colours, poses, backgrounds and scene prominence. This makes it a challenging category to classify.
 
-The MLP took 35 minutes to train and is capable of classifying the entire test set in
+The MLP took 35 minutes to train and is capable of classifying the entire test set in under 1 second.
+
+\subsubsection{Possible improvements}
+
+There are many improvements which could improve the accuracy of our MLP classifier. Perhaps the simplest of these is to use more data augmentation. For our final model we only used horizontal mirroring
 
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{images/Confusion_Matrix}
    \caption{Confusion Matrix for the final MLP classifier }
    \label{fig:Conf_Matrix}
-<<<<<<< HEAD
 \end{figure}
 
 \begin{table}[h]
@@ -225,6 +228,3 @@ The MLP took 35 minutes to train and is capable of classifying the entire test s
 \label{Tab:Classes}
 \end{center}
 \end{table}
-=======
-\end{figure}
->>>>>>> b4d7d4c7818064786a2d83412e1f567537a54296

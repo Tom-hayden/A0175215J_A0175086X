@@ -29,14 +29,14 @@ In this architecture\cite{springenberg2014striving} a CNN consisting entirely of
 
 LSUV initialisation provides a method to initialise deep CNN. This produces networks with better accuracy than uninitialised networks. In addition LSUV greatly accelerates the training of CNNs. An architecture based on the LSUV method machine managed to achieve an accuracy of $94.16\%$. Note that this only used a moderate amount of data augmentation.
 
-It is important to stress the use of data augmentation when looking at these results. Table \label{tab:SOA_res} shows the results of the three leading architectures along with the amount of data augmentation. Moderate data augmentation consists of mirroring in the horizontal axis and small translations in each axis. Extreme data augmentation involves upscaling the images to $126\times126$ pixel images and performing a variety of operations such as shearing, colour augmentation, rotation, translation and scaling. It may be the case that with additional data augmentation, LSUV outperforms the max-Pooling approach.
+It is important to stress the use of data augmentation when looking at these results. Table \ref{tab:SOA_res} shows the results of the three leading architectures along with the amount of data augmentation. Moderate data augmentation consists of mirroring in the horizontal axis and small translations in each axis. Extreme data augmentation involves upscaling the images to $126\times126$ pixel images and performing a variety of operations such as shearing, colour augmentation, rotation, translation and scaling. It may be the case that with additional data augmentation, LSUV outperforms the max-Pooling approach.
 
 \begin{table}[h]
 \begin{center}
- \begin{tabular}{||c || c c c||}
+ \begin{tabular}{||c | c c c||}
  \hline
  Data Augmentation & Fractional Max-Pooling & ALL-CNN & LSUV \\ [0.5ex]
- \hline\hline
+ \hline
  None & - & $90.92\%$ & - \\
  \hline
  Moderate & - & $92.75\%$ & $93.94\%$\\
@@ -46,6 +46,7 @@ It is important to stress the use of data augmentation when looking at these res
 
 \end{tabular}
 \caption{Table showing the results of the leading CIFAR-10 architectures.}
+\label{tab:SOA_res}
 \end{center}
 \end{table}
 
