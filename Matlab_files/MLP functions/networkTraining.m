@@ -37,31 +37,6 @@ net.layerweights{3,2}.learnParam.lr = 10;
 
 [net,tr] = train(net,data_cpy,target_cpy);
 
-net.layerweights{2,1}.learnParam.lr = 0.1;
-net.layerweights{3,2}.learnParam.lr = 0.1;
-
-RandIndx = randperm(origSize);
-data(1:origSize,:)= data(RandIndx,:);
-target(1:origSize,:) = target(RandIndx,:);
-
-data_cpy = data';
-target_cpy = target';
-
-
-[net,tr] = train(net,data_cpy,target_cpy);
-
-net.layerweights{2,1}.learnParam.lr = 0.001;
-net.layerweights{3,2}.learnParam.lr = 0.001;
-
-RandIndx = randperm(origSize);
-data(1:origSize,:)= data(RandIndx,:);
-target(1:origSize,:) = target(RandIndx,:);
-
-data_cpy = data';
-target_cpy = target';
-
-
-[net,tr] = train(net,data_cpy,target_cpy);
 
 
 % Test the Network

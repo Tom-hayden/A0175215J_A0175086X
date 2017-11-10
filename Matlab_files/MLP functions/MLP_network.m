@@ -9,7 +9,6 @@ options.augmentation = 'mirror';
 options.trainFcn =  'trainscg';
 options.layers = [100 100];
 options.performFcn = 'crossentropy'; % many valid options
-options.activation = '1234';
 
 
 

@@ -145,10 +145,10 @@ Hyperparameter selection for ANN such as MLP has become an active field of resea
  	\item SSE, the sum squared error function
  	\item MAE, the mean absolute error function
  	\item MSE, the mean squared error function
- 	\item Crossentropy error function
+ 	\item Cross-entropy error function
  \end{itemize}
 
- As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Crossentropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the crossentropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks.
+ As Figure \ref{fig:performFct} shows, three performance functions result in a similar performance: MSE, SSE and Cross-entropy. SAE and MAE result in a slightly lower performance. An explanation might be that these two functions take the absolute error instead of the squared error. Using the squared error leads to a stronger penalization of larger errors. The best performance is achieved using the cross-entropy performance function. This performance function heavily penalizes large errors with very little penalty for small errors. It is also recommended by MATLAB for classification tasks.
 
  \begin{figure}[h!]
  	\centering
@@ -187,9 +187,50 @@ Hyperparameter selection for ANN such as MLP has become an active field of resea
 
 \subsection{Optimized Classifier}
 
+We now attempt to use the information we have gathered to create our final MLP classifier. The parameters used are summarised below.
+\begin{itemize}
+    \item Training batch size is set to all 50000 images. This will give the classifier the most data to work with and has consistently given the best results.
+    \item Horizontal mirroring is used to augment the data.
+    \item Data is mean normalised between $-0.5$ and $0.5$. This has been shown to improve results slightly.
+    \item The scaled conjugate gradient backpropagation training function is used. This algorithm proved to be quite fast and gives good results.
+    \item The architecture will use two hidden layers with a softmax final layer. Both hidden layers have 100 neurons. Testing on the whole data set revealed that an increased number of neurons in the first layer improved results slightly.
+    \item The cross-entropy performance function is used as this gives the highest performance.
+    \item The saturating linear activation function is used as this gives the highest performance.
+\end{itemize}
+
+Using these results we managed to get a result of $52.61\%$. The confusion matrix is shown in figure \ref{fig:Conf_Matrix}. Table \ref{Tab:Classes} shows how the labels used in the training model correspond to real classes. Note that the highest error exhibited in the confusion matrix is between cats and dogs. This is not surprising as the general form of cats and dogs are quite similar and the poses of both vary considerably throughout the data set.
+
+The MLP was most effective at classifying the ship class. This is because the ship class generally has many distinctive features such as a blue background. In contrast, the dog class performed the worst. The dogs can appear with a variety of colours, poses, backgrounds and prominence. This makes it a challenging class to classify.
+
+The MLP took 35 minutes to train and is capable of classifying the entire test set in
+
 \begin{figure}[h!]
    \centering
    \includegraphics[width=\textwidth]{images/Confusion_Matrix}
    \caption{Confusion Matrix for the final MLP classifier }
    \label{fig:Conf_Matrix}
 \end{figure}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{||c | c||}
+ \hline
+ Label & Class \\ [0.5ex]
+ \hline
+ 1& Airplane\\
+ 2& Automobile \\
+ 3& Bird\\
+ 4& Cat\\
+ 5& Deer\\
+ 6& Dog\\
+ 7& Frog\\
+ 8& Horse\\
+ 9& Ship\\
+ 10& Truck\\[1ex]
+ \hline
+
+\end{tabular}
+\caption{The different classes in the CIFAR-10 dataset}
+\label{Tab:Classes}
+\end{center}
+\end{table}
