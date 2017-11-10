@@ -6,6 +6,7 @@ trainFcn = options.trainFcn;
 origSize = options.trainsize;
 totalSize = size(target,2);
 
+%Scramble image order - This ensures a new validate is choosen each time.
 RandIndx = randperm(origSize);
 data(1:origSize,:)= data(RandIndx,:);
 target(1:origSize,:) = target(RandIndx,:);

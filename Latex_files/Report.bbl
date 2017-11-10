@@ -1,4 +1,4 @@
-\begin{thebibliography}{32}
+\begin{thebibliography}{33}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -208,5 +208,12 @@ Robert Hecht-Nielsen et~al.
 Martin~Fodslette M{\o}ller.
 \newblock A scaled conjugate gradient algorithm for fast supervised learning.
 \newblock \emph{Neural networks}, 6\penalty0 (4):\penalty0 525--533, 1993.
+
+\bibitem[Blum et~al.(1999)Blum, Kalai, and Langford]{blum1999beating}
+Avrim Blum, Adam Kalai, and John Langford.
+\newblock Beating the hold-out: Bounds for k-fold and progressive
+  cross-validation.
+\newblock In \emph{Proceedings of the twelfth annual conference on
+  Computational learning theory}, pages 203--208. ACM, 1999.
 
 \end{thebibliography}
