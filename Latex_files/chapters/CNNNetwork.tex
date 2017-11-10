@@ -2,49 +2,83 @@
 	\pagestyle{mario}
 	\sectionauthor{M. Gini \& T. M. Hayden}
 
-CNN is a more advanced architecture compared to a MLP network. Similarly to a MLP, it consists of an input as well as an output layer, as well as several hidden layers. The hidden layers typically consist of convolutional layers, pooling layers, fully connected layers and normalization layers. Due to that, CNN are usually much deeper than MLP networks.
+CNN is a more advanced architecture compared to a MLP network. Similarly to a MLP, it consists of an input as well as an output layer, as well as several hidden layers. The hidden layers typically consist of convolutional units and fully connected layers. Due to that, CNN are usually much deeper than MLP networks.
 
-However, CNN require significantly more computing power to train. Even though MATLAB supports training on the GPU, some quick maths reveal that our computational resources are insufficient for extensive parameter search of a CNN.
+CNN require significantly more computing power to train. Even though MATLAB supports training on the GPU, some quick maths reveal that our computational resources are insufficient for extensive parameter search of a CNN. Nevertheless, a basic CNN is implemented to analyze the performance gains. 
 
-	
 \subsection{Network Structure}
 
-Since the number of hidden layers of a CNN can be quite large, even more hyperparameters could be explored than for an MLP. This takes unreasonable amounts of time. Therefore, this section only presents the final version of our CNN which is found through small trial-and-error tests. It consists of 16 layers which are summarized below.
+Since the number of hidden layers of a CNN can be quite large, even more hyperparameters can be explored than for an MLP. This takes unreasonable amounts of time. Therefore, this section only presents the final version of our CNN which is found through small trial-and-error tests. It consists of an input layer, convolutional units, fully connected layers and an output layer. The structure of each layer type is briefly described below.
 
 \begin{itemize}
+	
 	\item \textbf{Input Layer}\\
-	For a color image, the channel size is 3, corresponding to the RGB values. You do not need to shuffle the data because trainNetwork, by default, shuffles the data at the beginning of training.
+	This layer inputs the raw image data to the network. It also appslies data normalization by subtracting the per-pixel mean. It therefore includes the data preprocessing step.
 	
 	\item \textbf{Convolutional Units}\\
-	This CNN possesses three convolutional units. A convolutional unit consists of several layers. The first layer is always the \textit{convolutional layer}. It has parameters for filter size and depth, which control the size and number of feature maps the layer is analyzing. This layer is followed by a \textit{batch normalization layer} which normalizes the activations and gradients propagating through a network, making network training an easier optimization problem.
+	A convolutional unit consists of several layers. The first layer is always the \textit{convolutional layer}. It has parameters for filter size and depth, which control the size and number of the feature maps the layer is analyzing. This layer is followed by a \textit{batch normalization layer} which normalizes the activations and gradients propagating through a network, making network training an easier optimization problem.
 	
-	Then, a \textit{rectified linear unit} (ReLU) follows. This is a nonlinear activation function very commonly used in CNN.
+	Then, a \textit{rectified linear unit} (ReLU) follows. This is a nonlinear activation function very commonly used in CNN. Finally, a convolutional unit has a \textit{max-pooling layer} that reduces the spatial size of the feature map. This removes redundant spatial information. As a consequence, the number of layers can be increased without increasing the amount of computation time per layer. A max-pooling layer simply returns the maximum values of rectangular regions of inputs.
 	
-	\item \textbf{Output Layer}\\
-	The output layer consists of a softmax layer as described earlier together with a classification layer which simply chooses the class that obtained the highest prediction by the softmax layer.
+	\item \textbf{Fully Connected Layers}\\
+	Fully connected layers are usually employed between the convolutional layers and the output layer. As the name suggests, they are fully connected to all neurons in the preceding layer. It therefore combines all the features learned by the previous layers across the image to identify larger patterns.
+	
+	\item \textbf{Output Layers}\\
+	The output layer consists of a softmax layer as described in Section \ref{subsec:setup} together with a classification layer which simply chooses the class that achieved the highest probability by the softmax layer.
 	
 \end{itemize}
 
-
-Batch Normalization Layer Batch normalization layers normalize the activations and gradients propagating through a network, making network training an easier optimization problem. Use batch normalization layers between convolutional layers and nonlinearities, such as ReLU layers, to speed up network training and reduce the sensitivity to network initialization. Use BatchNormalizationLayer to create a batch normalization layer.
-
-ReLU Layer The batch normalization layer is followed by a nonlinear activation function. The most common activation function is the rectified linear unit (ReLU). Use ReLULayer to create a ReLU layer.
-
-Max-Pooling Layer Convolutional layers (with activation functions) are sometimes followed by a down-sampling operation that reduces the spatial size of the feature map and removes redundant spatial information. Down-sampling makes it possible to increase the number of filters in deeper convolutional layers without increasing the required amount of computation per layer. One way of down-sampling is using a max pooling, which you create using MaxPooling2DLayer. The max pooling layer returns the maximum values of rectangular regions of inputs, specified by the first argument, poolSize. In this example, the size of the rectangular region is [2,2]. The 'Stride' name-value pair argument specifies the step size that the training function takes as it scans along the input.
-
-Fully Connected Layer The convolutional and down-sampling layers are followed by one or more fully connected layers. As its name suggests, a fully connected layer is a layer in which the neurons connect to all the neurons in the preceding layer. This layer combines all the features learned by the previous layers across the image to identify the larger patterns. The last fully connected layer combines the features to classify the images. Therefore, the OutputSize parameter in the last fully connected layer is equal to the number of classes in the target data. In this example, the output size is 10, corresponding to the 10 classes. Use FullyConnectedLayer to create a fully connected layer.
+Table \ref{Tab:CNNStructure} shows the implementation of our final CNN in MATLAB. It consists of 17 layers.
+ 
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{||c | c||}
+			\hline
+			\textbf{Layer Type}& \textbf{MATLAB Implementation} \\ [0.5ex]
+			\hline
+			Input Layer& Imageinputlayer(\lbrack32,32,2\rbrack)\\
+			\hline
+			 & convolution2dLayer(3,16,'Padding',1) \\
+			First& batchNormalizationLayer\\
+			Convolutional Unit& reluLayer\\
+			 & maxPooling2dLayer(2,'Stride',2)\\
+			\hline
+			 & convolution2dLayer(3,32,'Padding',1)\\
+			Second& batchNormalizationLayer\\
+			Convolutional Unit& reluLayer\\
+			 & maxPooling2dLayer(2,'Stride',2)\\
+			\hline
+			 & convolution2dLayer(3,64,'Padding',1)\\
+			Third& batchNormalizationLayer\\
+			Convolutional Unit& reluLayer\\
+			& maxPooling2dLayer(2,'Stride',2)\\
+			\hline
+			Fully Connected& fullyConnectedLayer(10)\\
+			Layers& fullyConnectedLayer(10)\\
+			\hline
+			Output& softmaxLayer\\
+			Layers& classificationLayer\\
+			\hline
+			
+		\end{tabular}
+		\caption{The CNN structure as implemented in MATLAB.}
+		\label{Tab:CNNStructure}
+	\end{center}
+\end{table}
 
 
 \subsection{Test Accuracy Results}
 
-Here, the results of a few tests are presented.
+MATLAB introduced a convenient CNN training GUI in the R2017b release. Figure \ref{fig:CNNTrain} shows a screenshot of the GUI that allows to observe the training progress.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/CNNTrain}
-	\caption{MATLAB GUI for training CNN.}
+	\caption{Screenshot of MATLAB GUI for training a CNN. The blue/red curves represent performance on the training dataset, while the black line represents the performance on the validation dataset.}
 	\label{fig:CNNTrain}
 \end{figure}
+
+The test accuracy on the test dataset is found to be 74.22\%. This is considerably better than the MLP and 
 
 
 
