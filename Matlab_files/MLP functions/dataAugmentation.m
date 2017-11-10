@@ -29,6 +29,7 @@ if(onlyFlip)
     end
     augData(1:2*trainSize,:) = rotDataFirst;
 else
+    %Mirror and rotate.
     augData = zeros(8*trainSize,3072);
     imgDataFlipped = flip(imgData,2);
     rotDataFirst = zeros(2*trainSize,3072);

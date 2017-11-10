@@ -26,6 +26,7 @@ An architecture based on fractional max-pooling currently has the highest publis
 In this architecture\cite{springenberg2014striving} a CNN consisting entirely of convolutional layers is proposed. Max-pooling layers are instead replaced with convolutional layers with increased stride. These increased stride layers act in a similar way to max-pool layers in that they downsample the data and allow the CNN somewhat invariant feature location. This architecture has an accuracy of $95.59\%$ which is the 2nd highest published result. This architecture also makes heavy use of data augmentation.
 
 \subsubsection{Layer-Sequential Unit-Variance (LSUV) Initialization}
+\label{sec:LSUV}
 
 LSUV initialisation provides a method to initialise deep CNN. This produces networks with better accuracy than uninitialised networks. In addition LSUV greatly accelerates the training of CNNs. An architecture based on the LSUV method machine managed to achieve an accuracy of $94.16\%$. Note that this only used a moderate amount of data augmentation.
 

@@ -1,3 +1,4 @@
+%This script plots 8 augmented images.
 
 
 options.trainsize = 10000;       %value between 1 and 50000
