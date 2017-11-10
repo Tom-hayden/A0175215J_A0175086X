@@ -2,18 +2,18 @@
 	\pagestyle{mario}
 	\sectionauthor{M. Gini \& T. M. Hayden}
 
-CNN is a more advanced architecture compared to a MLP network. Similarly to a MLP, it consists of an input as well as an output layer, as well as several hidden layers. The hidden layers typically consist of convolutional units and fully connected layers. Due to that, CNN are usually much deeper than MLP networks.
+CNN is a more advanced architecture than a basic MLP. Similarly to a MLP, it consists of an input and an output layer, as well as several hidden layers. The hidden layers typically consist of convolutional units and fully connected layers. Due to that, CNN are usually much deeper than MLP networks.
 
-CNN require significantly more computing power to train. Even though MATLAB supports training on the GPU, some quick maths reveal that our computational resources are insufficient for extensive parameter search of a CNN. Nevertheless, a basic CNN is implemented to analyze the performance gains. 
+CNN require significantly more computing power to train. Even though MATLAB supports training on the GPU, some quick maths reveal that our computational resources are insufficient for extensive parameter search on a CNN. A basic CNN is implemented to compare the performance with the MLP.
 
 \subsection{Network Structure}
 
-Since the number of hidden layers of a CNN can be quite large, even more hyperparameters can be explored than for an MLP. This takes unreasonable amounts of time. Therefore, this section only presents the final version of our CNN which is found through small trial-and-error tests. It consists of an input layer, convolutional units, fully connected layers and an output layer. The structure of each layer type is briefly described below.
+Since the number of hidden layers of a CNN can be quite large and many different types of layers are available, the number of hyperparameters is even larger than for a MLP classifier. This requires unreasonable amounts of training time. Therefore, this section only presents the final version of our CNN which is found through small trial-and-error tests. It consists of an input layer, convolutional units, fully connected layers and an output layer. The functionality of each layer type is briefly described below.
 
 \begin{itemize}
 	
 	\item \textbf{Input Layer}\\
-	This layer inputs the raw image data to the network. It also appslies data normalization by subtracting the per-pixel mean. It therefore includes the data preprocessing step.
+	This layer inputs the raw image data to the network. It also applies data normalization by subtracting the per-pixel mean value over the training dataset. It therefore includes the data preprocessing step.
 	
 	\item \textbf{Convolutional Units}\\
 	A convolutional unit consists of several layers. The first layer is always the \textit{convolutional layer}. It has parameters for filter size and depth, which control the size and number of the feature maps the layer is analyzing. This layer is followed by a \textit{batch normalization layer} which normalizes the activations and gradients propagating through a network, making network training an easier optimization problem.
@@ -28,7 +28,7 @@ Since the number of hidden layers of a CNN can be quite large, even more hyperpa
 	
 \end{itemize}
 
-Table \ref{Tab:CNNStructure} shows the implementation of our final CNN in MATLAB. It consists of 17 layers.
+Table \ref{Tab:CNNStructure} shows the implementation of our final CNN in MATLAB. Three convolutional units are employed with a filter size of $3\time3$ pixels and a varying number of filters. For the max-pooling layers, a filter size of $2\times2$ pixels is used. Two fully connected layers and the output layers complete our CNN architecture.
  
 \begin{table}[h]
 	\begin{center}
@@ -65,21 +65,24 @@ Table \ref{Tab:CNNStructure} shows the implementation of our final CNN in MATLAB
 		\label{Tab:CNNStructure}
 	\end{center}
 \end{table}
+\FloatBarrier
+\subsection{Network Training Results}
 
-
-\subsection{Test Accuracy Results}
-
-MATLAB introduced a convenient CNN training GUI in the R2017b release. Figure \ref{fig:CNNTrain} shows a screenshot of the GUI that allows to observe the training progress.
+MATLAB has introduced a convenient CNN training GUI in the R2017b release. Figure \ref{fig:CNNTrain} shows a screenshot of the GUI that allows to observe the training progress. Together with the GUI, several applications have been updated as well. For example, any GPU is automatically detected and used for training. Our CNN training takes place on a single GPU of type NVIDIA GeForce GT 640M. The training of a single configuration takes around \SI{20}{\minute}. The architecture described in Table \ref{Tab:CNNStructure} is found to obtain a test accuracy of 74.22\%. This is considerably better than the MLP even though it is not yet a fully optimized CNN architecture.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/CNNTrain}
-	\caption{Screenshot of MATLAB GUI for training a CNN. The blue/red curves represent performance on the training dataset, while the black line represents the performance on the validation dataset.}
+	\caption{Screenshot of MATLAB GUI for training a CNN. The blue \& red curves represent performance on the training dataset, while the black line represents the performance on the validation dataset.}
 	\label{fig:CNNTrain}
 \end{figure}
 
-The test accuracy on the test dataset is found to be 74.22\%. This is considerably better than the MLP and 
+Figure \ref{fig:CNNConfusion} shows the confusion matrix for the CNN. The most likely missclassifications are the same as for the MLP case, e.g. the misclassification between cats and dogs is significantly higher than inbetween other classes.
 
-
-
-    
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{images/Confusion_MatrixCNN.png}
+	\caption{Confusion matrix for the final CNN.}
+	\label{fig:CNNConfusion}
+\end{figure}
+\FloatBarrier
