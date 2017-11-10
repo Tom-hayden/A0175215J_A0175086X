@@ -22,5 +22,5 @@ for i = 1:10000
     end
 end
 
-Accuracy = count/10000
+SuccessRateTesting = count/100
 
