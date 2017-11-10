@@ -9,11 +9,22 @@ However, CNN require significantly more computing power to train. Even though MA
 	
 \subsection{Network Structure}
 
-In this section, the network structure of the CNN is summarized. Since
+Since the number of hidden layers of a CNN can be quite large, even more hyperparameters could be explored than for an MLP. This takes unreasonable amounts of time. Therefore, this section only presents the final version of our CNN which is found through small trial-and-error tests. It consists of 16 layers which are summarized below.
 
-Image Input Layer An ImageInputLayer is where you specify the image size, which, in this case, is 28-by-28-by-1. These numbers correspond to the height, width, and the channel size. The digit data consists of grayscale images, so the channel size (color channel) is 1. For a color image, the channel size is 3, corresponding to the RGB values. You do not need to shuffle the data because trainNetwork, by default, shuffles the data at the beginning of training.
+\begin{itemize}
+	\item \textbf{Input Layer}\\
+	For a color image, the channel size is 3, corresponding to the RGB values. You do not need to shuffle the data because trainNetwork, by default, shuffles the data at the beginning of training.
+	
+	\item \textbf{Convolutional Units}\\
+	This CNN possesses three convolutional units. A convolutional unit consists of several layers. The first layer is always the \textit{convolutional layer}. It has parameters for filter size and depth, which control the size and number of feature maps the layer is analyzing. This layer is followed by a \textit{batch normalization layer} which normalizes the activations and gradients propagating through a network, making network training an easier optimization problem.
+	
+	Then, a \textit{rectified linear unit} (ReLU) follows. This is a nonlinear activation function very commonly used in CNN.
+	
+	\item \textbf{Output Layer}\\
+	The output layer consists of a softmax layer as described earlier together with a classification layer which simply chooses the class that obtained the highest prediction by the softmax layer.
+	
+\end{itemize}
 
-Convolutional Layer In the convolutional layer, the first argument is filterSize, which is the height and width of the filters the training function uses while scanning along the images. In this example, the number 3 indicates that the filter size is 3-by-3. You can specify different sizes for the height and width of the filter. The second argument is the number of filters, numFilters, which is the number of neurons that connect to the same region of the input. This parameter determines the number of feature maps. Use the 'Padding' name-value pair to add padding to the input feature map. For a filter size of 3, a padding of 1 ensures that the spatial output size is the same as the input size. You can also define the Stride and learning rates for this layer using name-value pair arguments of Convolution2DLayer.
 
 Batch Normalization Layer Batch normalization layers normalize the activations and gradients propagating through a network, making network training an easier optimization problem. Use batch normalization layers between convolutional layers and nonlinearities, such as ReLU layers, to speed up network training and reduce the sensitivity to network initialization. Use BatchNormalizationLayer to create a batch normalization layer.
 
@@ -23,9 +34,6 @@ Max-Pooling Layer Convolutional layers (with activation functions) are sometimes
 
 Fully Connected Layer The convolutional and down-sampling layers are followed by one or more fully connected layers. As its name suggests, a fully connected layer is a layer in which the neurons connect to all the neurons in the preceding layer. This layer combines all the features learned by the previous layers across the image to identify the larger patterns. The last fully connected layer combines the features to classify the images. Therefore, the OutputSize parameter in the last fully connected layer is equal to the number of classes in the target data. In this example, the output size is 10, corresponding to the 10 classes. Use FullyConnectedLayer to create a fully connected layer.
 
-Softmax Layer The softmax activation function normalizes the output of the fully connected layer. The output of the softmax layer consists of positive numbers that sum to one, which can then be used as classification probabilities by the classification layer. Create a softmax layer using the SoftmaxLayer function after the last fully connected layer.
-
-Classification Layer The final layer is the classification layer. This layer uses the probabilities returned by the softmax activation function for each input to assign the input to one of the mutually exclusive classes and compute the loss. To create a classification layer, use classificationLayer.
 
 \subsection{Test Accuracy Results}
 
