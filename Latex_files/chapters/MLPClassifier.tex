@@ -230,12 +230,12 @@ The MLP took 35 minutes to train and is capable of classifying the entire test s
 
 \subsubsection{Possible improvements}
 
-There are many improvements which could improve the accuracy of our MLP classifier. Perhaps the simplest and most effective of these is to use more data augmentation. For our final model we only used horizontal mirroring due to RAM constraints. Image rotations and translations are both commonly used to increase performance in image recognition neural networks. In addition other advanced data augmentation methods, such those used in the fractional max-pooling archetecture\cite{graham2014fractional}, could be used.
+There are many improvements which could improve the accuracy of our MLP classifier. Perhaps the simplest and most effective of these is to use more data augmentation. For our final model we only used horizontal mirroring due to RAM constraints. Image rotations and translations are both commonly used to increase performance in image recognition neural networks. In addition, other advanced data augmentation methods, such those used in the fractional max-pooling architecture\cite{graham2014fractional}, could be used.
 
-With more computational power and RAM, it would be possible to do a more thorough hyper parameter search. In particular the number of neurons used in the hidden layers is likely not optimal. A more thorough approach would be to test different numbers of neurons on the entire augmented dataset.
+With more computational power and RAM, it would be possible to do a more thorough hyperparameter search. In particular the number of neurons used in the hidden layers is likely not optimal. A more thorough approach would be to test different numbers of neurons on the entire augmented dataset.
 
-Weight initialisation should also be investigated. For our MLP, we simply used a random initialisation. However as discussed in section \ref{sec:LSUV}, a good initialisation was shown to improve preference of a CNN. It is likely that a similar method could also improve results for an MLP.
+Weight initialization should also be investigated. For our MLP, we simply used a random initialization. However as discussed in section \ref{sec:LSUV}, a good initialization was shown to improve preference of a CNN. It is likely that a similar method could also improve results for an MLP.
 
-In addition it may be possible to improve the validation process. Our model uses a hold out validation strategy. This involves reserving a section of the data to be used as the validate. There are alternative approaches such as k-fold cross validation which have been shown to produce better results\cite{blum1999beating}.
+In addition, it may be possible to improve the validation process. Our model uses a hold out validation strategy. This involves reserving a section of the data to be used as the validate. There are alternative approaches such as k-fold cross validation which have been shown to produce better results\cite{blum1999beating}.
 
 \FloatBarrier
